@@ -11,10 +11,11 @@ echo =======================================
 
 rem === 執行 Python 更新 index.md ===
 if exist tools\update_index.py (
-    python tools\update_index.py
+    "C:\Users\User\anaconda3\python.exe" tools\update_index.py
 )
 
 rem === 執行 PowerShell 版本推送 ===
 powershell -ExecutionPolicy Bypass -File tools\blog_push.ps1 -Message "%msg%"
 
 endlocal
+pause
