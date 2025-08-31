@@ -1,4 +1,4 @@
-# Day1
+# Day1 – [Verilog]
 
 ## 📌 Generate
 In the HDLBits *Vectorr* question, the output should be the reverse of the input order.

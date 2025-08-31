@@ -1,2 +1,10 @@
+# drafts & scratch (keep local only)
 open_vscode.bat
 drafts/
+
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
