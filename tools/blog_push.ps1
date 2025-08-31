@@ -1,18 +1,24 @@
 Param(
   [string]$Message = "chore: update notes"
 )
-# Try run updater
-if (Test-Path ".\update_index.py") {
-  python .\update_index.py 2>$null
-} elseif (Test-Path ".\tools\update_index.py") {
-  python .\tools\update_index.py 2>$null
+
+# Stage all changes
+git add -A | Out-Null
+
+# Check if there are staged changes; quiet==no changes → exit 0
+git diff --cached --quiet
+if ($LASTEXITCODE -eq 0) {
+  Write-Host "✅ No changes to commit. Skipping commit & push."
+  exit 0
 }
-git add -A
-# commit may fail if nothing changed
+
+# Commit & push
 try {
   git commit -m $Message | Out-Null
 } catch {
-  Write-Host "Nothing to commit."
+  Write-Host "⚠️ Commit failed or nothing to commit."
+  exit 0
 }
+
 git push
 Write-Host "✅ Pushed with message: $Message"

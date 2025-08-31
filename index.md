@@ -8,6 +8,6 @@ Recent Interests:
 
 ## 📚 Recent Posts
 <!-- posts:start -->
-- **[📌 Generate](C:/Users/User/Documents/Blog/docs/day1.md)**  
+- **[📌 Generate](docs/day1.md)**  
   Category: `Verilog` · Day1
 <!-- posts:end -->
