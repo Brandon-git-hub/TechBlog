@@ -21,10 +21,8 @@ Notice that ```24{in[7]}```must be wrapped in ```{}``` because of its vector ret
 ```verilog
 module top_module (
     input a, b, c, d, e,
-    output [24:0] out );//
+    output [24:0] out );
 
-    // The output is XNOR of two vectors created by 
-    // concatenating and replicating the five inputs.
     assign out = ~{{5{a}}, {5{b}}, {5{c}}, {5{d}}, {5{e}} } ^ {5{a, b, c, d, e}};
 
 endmodule
@@ -32,5 +30,5 @@ endmodule
 
 
 ## 📚 Reference
-[HDLBits Problem - Vector4](https://hdlbits.01xz.net/wiki/Vector4)
-[HDLBits Problem - Vector5](https://hdlbits.01xz.net/wiki/Vector5)
+* [HDLBits Problem - Vector4](https://hdlbits.01xz.net/wiki/Vector4)
+* [HDLBits Problem - Vector5](https://hdlbits.01xz.net/wiki/Vector5)
