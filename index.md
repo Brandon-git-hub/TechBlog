@@ -8,6 +8,8 @@ Recent Interests:
 
 ## 📚 Recent Posts
 <!-- posts:start -->
+- **[📌 Vector Replication](docs/day2.md)**  
+  Category: `Verilog` · Day2
 - **[📌 Generate](docs/day1.md)**  
   Category: `Verilog` · Day1
 <!-- posts:end -->
