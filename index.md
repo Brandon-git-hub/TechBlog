@@ -8,6 +8,8 @@ Recent Interests:
 
 ## 📚 Recent Posts
 <!-- posts:start -->
+- **[📌 Module shift](docs/day4.md)**  
+  Category: `Verilog` · Day4
 - **[📌 Hierarchy Module](docs/day3.md)**  
   Category: `Verilog` · Day3
 - **[📌 Vector Replication](docs/day2.md)**  
