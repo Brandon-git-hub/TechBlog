@@ -4,7 +4,7 @@ title: "Day 3"
 categories: [Verilog]
 ---
 
-## 📌 Hierarchy Module
+## 📌 Instantiate Module
 
 ## 🧑‍💻 Code Example
 
