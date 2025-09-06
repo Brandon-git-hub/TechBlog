@@ -8,6 +8,8 @@ Recent Interests:
 
 ## 📚 Recent Posts
 <!-- posts:start -->
+- **[📌 Carry-select adder](docs/day7.md)**  
+  Category: `Verilog` · Day7
 - **[📌 Ripple-Carry Adder](docs/day6.md)**  
   Category: `Verilog` · Day6
 - **[📌 Module shift + Mux](docs/day5.md)**  
