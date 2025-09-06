@@ -1,4 +1,7 @@
-## Technique Learning Note
+---
+layout: page
+title: "Technique Learning Note"
+---
 
 Welcome to my blog！  
 I will update my technical learning notes here.
