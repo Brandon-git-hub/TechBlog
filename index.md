@@ -12,13 +12,10 @@ Recent Interests:
 ## 📚 Recent Posts
 {%- assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" -%}
 {%- assign sorted_docs = docs_pages | sort: "path" | reverse -%}
-<ul>
+
+{%- capture posts_md -%}
 {%- for p in sorted_docs limit:10 -%}
-  {%- comment -%}
-  1) 把內容轉成 HTML
-  2) 取第一個 <h2>…</h2> 的內文作為主題
-  3) 若沒有 <h2>，退回 title/name
-  {%- endcomment -%}
+  {%- comment -%} 取第一個 <h2> 的文字當作主題（抓不到就退回 title） {%- endcomment -%}
   {%- assign html = p.content | markdownify -%}
   {%- assign h2_blocks = html | split: '<h2' -%}
   {%- assign topic = nil -%}
@@ -32,15 +29,10 @@ Recent Interests:
     {%- assign topic = p.title | default: p.name -%}
   {%- endif -%}
 
-  <li>
-    <a href="{{ p.url | relative_url }}">
-      📌 {{ p.title | default: p.name }} — {{ topic }}
-    </a>
-    {%- if p.categories -%}
-      <span> · Category: <code>{{ p.categories | join: ', ' }}</code></span>
-    {%- endif -%}
-  </li>
+- [📌 {{ p.title | default: p.name }} — {{ topic }}]({{ p.url | relative_url }}){% if p.categories %} · Category: `{{ p.categories | join: ', ' }}`{% endif %}
 {%- endfor -%}
-</ul>
+{%- endcapture -%}
+
+{{ posts_md | markdownify }}
 
 <p><a href="{{ '/categories/' | relative_url }}">Browse by category →</a></p>
