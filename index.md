@@ -12,23 +12,11 @@ Recent Interests:
 ## 📚 Recent Posts
 
 {% assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" %}
-{% assign sorted_docs = docs_pages | sort: "path" | reverse %}
+{% assign sorted_docs = docs_pages | sort: "day" | reverse %}
 
 {% capture posts_md %}
 {% for p in sorted_docs limit:10 %}
-  {% assign html = p.content | markdownify %}
-  {% assign h2_blocks = html | split: '<h2' %}
-  {% assign topic = nil %}
-  {% if h2_blocks.size > 1 %}
-    {% assign first_h2_tail = h2_blocks[1] %}
-    {% assign after_gt = first_h2_tail | split: '>' | last %}
-    {% assign h2_inner = after_gt | split: '</h2>' | first %}
-    {% assign topic = h2_inner | strip_html | strip %}
-  {% endif %}
-  {% if topic == nil or topic == '' %}
-    {% assign topic = p.title | default: p.name %}
-  {% endif %}
-- [📌 {{ p.title | default: p.name }} — {{ topic }}]({{ p.url | relative_url }}){% if p.categories %} · Category: `{{ p.categories | join: ', ' }}`{% endif %}
+- 📌 [{{ p.title }}]({{ p.url | relative_url }})<br/>Category: <code>{% if p.categories %}{{ p.categories | join: ', ' }}{% else %}Uncategorized{% endif %}</code>
 {% endfor %}
 {% endcapture %}
 

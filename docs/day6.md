@@ -1,10 +1,11 @@
 ---
 layout: page
-title: "Day 6"
+title: "Ripple-Carry Adder"
 categories: [Verilog]
+day: 6
 ---
 
-## 📌 Ripple-Carry Adder
+## 📌 Introduction
 ![alt text](../assets/Module_fadd.png)
 
 ## 🧑‍💻 Code Example

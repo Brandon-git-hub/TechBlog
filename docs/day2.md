@@ -1,10 +1,11 @@
 ---
 layout: page
-title: "Day 2"
+title: "Vector Replication"
 categories: [Verilog]
+day: 2
 ---
 
-## 📌 Vector Replication
+## 📌 Introduction
 ```verilog
 module top_module (
     input [7:0] in,

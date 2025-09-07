@@ -1,10 +1,11 @@
 ---
 layout: page
-title: "Day 5"
+title: "Module shift + Mux"
 categories: [Verilog]
+day: 5
 ---
 
-## 📌 Module shift + Mux
+## 📌 Introduction
 ![alt text](../assets/Module_shift8.png)
 
 ## 🧑‍💻 Code Example

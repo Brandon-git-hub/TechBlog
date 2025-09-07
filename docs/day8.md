@@ -1,10 +1,11 @@
 ---
 layout: page
-title: "Day 8"
+title: "Adder–subtractor"
 categories: [Verilog]
+day: 8
 ---
 
-## 📌 Adder–subtractor
+## 📌 Introduction
 ![alt text](../assets/Module_addsub.png)
 > Note: An XOR gate can also be viewed as a programmable inverter, where one input controls whether the other should be inverted. The following two circuits are both XOR gates:
 

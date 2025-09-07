@@ -1,10 +1,11 @@
 ---
 layout: page
-title: "Day 7"
+title: "Carry-select adder"
 categories: [Verilog]
+day: 7
 ---
 
-## 📌 Carry-select adder
+## 📌 Introduction
 ![alt text](../assets/Module_cseladd.png)
 
 ## 🧑‍💻 Code Example

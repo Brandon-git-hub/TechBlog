@@ -1,10 +1,11 @@
 ---
 layout: page
-title: "Day 3"
+title: "Instantiate Module"
 categories: [Verilog]
+day: 3
 ---
 
-## 📌 Instantiate Module
+## 📌 Introduction
 
 ## 🧑‍💻 Code Example
 
