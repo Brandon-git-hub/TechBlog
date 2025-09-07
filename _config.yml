@@ -2,6 +2,11 @@ title: "Brandon's Tech Blog"
 description: "Learning notes on IC design, Verilog, and more"
 theme: minima
 
+# 你的 GitHub Pages Project Pages 路徑
+url: "https://brandon-git-hub.github.io"
+baseurl: "/Blog"
+
+# 讓 header 短小精幹
 header_pages:
   - index.md
   - categories.md

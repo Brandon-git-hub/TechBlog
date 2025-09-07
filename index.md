@@ -15,7 +15,7 @@ Recent Interests:
 
 {%- capture posts_md -%}
 {%- for p in sorted_docs limit:10 -%}
-  {%- comment -%} 取第一個 <h2> 的文字當作主題（抓不到就退回 title） {%- endcomment -%}
+  {%- comment -%} 取第一個 <h2> 內文當主題；抓不到就退回 title {%- endcomment -%}
   {%- assign html = p.content | markdownify -%}
   {%- assign h2_blocks = html | split: '<h2' -%}
   {%- assign topic = nil -%}
