@@ -15,15 +15,20 @@ Recent Interests:
 <ul>
 {%- for p in sorted_docs limit:10 -%}
   {%- comment -%}
-  取第一個出現的二級標題（## ...）
-  若沒有，退回用該頁的 title/name
+  1) 把內容轉成 HTML
+  2) 取第一個 <h2>…</h2> 的內文作為主題
+  3) 若沒有 <h2>，退回 title/name
   {%- endcomment -%}
-  {%- assign chunks = p.content | split: "## " -%}
-  {%- assign first_h2_block = chunks[1] -%}
-  {%- assign first_h2_line = first_h2_block | split: "\n" | first -%}
-  {%- if first_h2_line -%}
-    {%- assign topic = first_h2_line | strip -%}
-  {%- else -%}
+  {%- assign html = p.content | markdownify -%}
+  {%- assign h2_blocks = html | split: '<h2' -%}
+  {%- assign topic = nil -%}
+  {%- if h2_blocks.size > 1 -%}
+    {%- assign first_h2_tail = h2_blocks[1] -%}
+    {%- assign after_gt = first_h2_tail | split: '>' | last -%}
+    {%- assign h2_inner = after_gt | split: '</h2>' | first -%}
+    {%- assign topic = h2_inner | strip_html | strip -%}
+  {%- endif -%}
+  {%- if topic == nil or topic == '' -%}
     {%- assign topic = p.title | default: p.name -%}
   {%- endif -%}
 

@@ -35,14 +35,21 @@ permalink: /categories/
   {%- for p in docs_pages -%}
     {%- if p.categories and p.categories contains c -%}
       {%- comment -%}
-      抓該頁第一個二級標題（## ...）；如果沒有，退回 title/name
+      對每頁：
+      1) 轉 HTML
+      2) 擷取第一個 <h2> 內文
+      3) 失敗就用 title/name
       {%- endcomment -%}
-      {%- assign chunks = p.content | split: "## " -%}
-      {%- assign first_h2_block = chunks[1] -%}
-      {%- assign first_h2_line = first_h2_block | split: "\n" | first -%}
-      {%- if first_h2_line -%}
-        {%- assign topic = first_h2_line | strip -%}
-      {%- else -%}
+      {%- assign html = p.content | markdownify -%}
+      {%- assign h2_blocks = html | split: '<h2' -%}
+      {%- assign topic = nil -%}
+      {%- if h2_blocks.size > 1 -%}
+        {%- assign first_h2_tail = h2_blocks[1] -%}
+        {%- assign after_gt = first_h2_tail | split: '>' | last -%}
+        {%- assign h2_inner = after_gt | split: '</h2>' | first -%}
+        {%- assign topic = h2_inner | strip_html | strip -%}
+      {%- endif -%}
+      {%- if topic == nil or topic == '' -%}
         {%- assign topic = p.title | default: p.name -%}
       {%- endif -%}
 
