@@ -35,7 +35,7 @@ module mux_21(input [15:0]in_1, input [15:0]in_2, input sel, output reg [15:0]ou
     end 
 endmodule
 ```
-> Note: We can implement either a direct tenary operator or a mux module. The tenary option is pure combinational and avoids introducing a ```reg``` unnecessary.
+> Note: We can implement either a direct ternary operator or a mux module. The ternary option is pure combinational and avoids introducing a ```reg``` unnecessary.
 
 ## 📚 Reference
 [HDLBits Problem - Module cseladd](https://hdlbits.01xz.net/wiki/Module_cseladd)

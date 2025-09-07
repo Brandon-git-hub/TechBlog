@@ -10,19 +10,18 @@ Recent Interests:
 * IC Design
 
 ## 📚 Recent Posts
-<!-- posts:start -->
-- **[📌 Carry-select adder](docs/day7.md)**  
-  Category: `Verilog` · Day7
-- **[📌 Ripple-Carry Adder](docs/day6.md)**  
-  Category: `Verilog` · Day6
-- **[📌 Module shift + Mux](docs/day5.md)**  
-  Category: `Verilog` · Day5
-- **[📌 Module shift](docs/day4.md)**  
-  Category: `Verilog` · Day4
-- **[📌 Instantiate Module](docs/day3.md)**  
-  Category: `Verilog` · Day3
-- **[📌 Vector Replication](docs/day2.md)**  
-  Category: `Verilog` · Day2
-- **[📌 Generate](docs/day1.md)**  
-  Category: `Verilog` · Day1
-<!-- posts:end -->
+{% assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" %}
+{% assign sorted_docs = docs_pages | sort: "path" | reverse %}
+<ul>
+{% for p in sorted_docs limit:10 %}
+  <li>
+    <a href="{{ p.url | relative_url }}">📌 {{ p.title | default: p.name }}</a>
+    {%- if p.categories -%}
+      <span> · Category: <code>{{ p.categories | join: ', ' }}</code></span>
+    {%- endif -%}
+  </li>
+{% endfor %}
+</ul>
+
+<p><a href="{{ '/categories/' | relative_url }}">Browse by category →</a></p>
+

@@ -40,13 +40,13 @@ if not "%REMOTE_URL%"=="" (
 )
 
 rem ==== 執行 Python 更新 index.md（僅此處執行一次）====
-if exist "tools\update_index.py" (
-  "%PYEXE%" "tools\update_index.py"
-) else (
-  echo [WARN] 找不到 tools\update_index.py，略過首頁更新。
-)
+@REM if exist "tools\update_index.py" (
+@REM   "%PYEXE%" "tools\update_index.py"
+@REM ) else (
+@REM   echo [WARN] 找不到 tools\update_index.py，略過首頁更新。
+@REM )
 
-pause
+@REM pause
 
 rem ==== 呼叫 PowerShell 版推送（由 ps1 來判斷是否要 commit/push）====
 if exist "tools\blog_push.ps1" (
