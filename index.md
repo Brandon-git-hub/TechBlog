@@ -8,6 +8,7 @@ I will update my technical learning notes here.
 Recent Interests:
 * Verilog 
 * IC Design
+* Analog/Memory IC
 
 ## 📚 Recent Posts
 
