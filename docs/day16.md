@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Dickson Charge Pump"
-categories: [IC]
+categories: [Analog]
 day: 16
 ---
 
