@@ -34,7 +34,7 @@ if not "%REMOTE_URL%"=="" (
   echo %REMOTE_URL% | find /I "Verilog-Learning.git" >nul
   if not errorlevel 1 (
     echo Detected old remote. Updating to ... Blog.git
-    git remote set-url origin https://github.com/Brandon-git-hub/Blog.git
+    git remote set-url origin https://github.com/Brandon-git-hub/TechBlog.git
     git remote -v
   )
 )
