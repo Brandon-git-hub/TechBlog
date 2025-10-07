@@ -57,6 +57,6 @@ if exist "tools\blog_push.ps1" (
 )
 
 rem open my github
-start "" "https://github.com/Brandon-git-hub/Blog"
+start "" "https://github.com/Brandon-git-hub/TechBlog"
 
 endlocal
