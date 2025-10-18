@@ -1,7 +1,7 @@
 ---
 layout: page
-title: ""
-categories: [STM32 baremetal - Environment]
+title: "Setup Environment"
+categories: [STM32 baremetal]
 day: 28
 ---
 
