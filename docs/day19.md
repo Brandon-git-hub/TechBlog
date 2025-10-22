@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Reduction Operators"
-categories: [FPGA]
+categories: [Verilog]
 day: 19
 ---
 

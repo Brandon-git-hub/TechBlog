@@ -2,7 +2,7 @@
 layout: page
 title: "7400-series IC"
 categories: [Verilog]
-day: 
+day: 23
 ---
 
 ## 📌 Introduction
