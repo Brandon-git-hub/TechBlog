@@ -2,7 +2,7 @@
 layout: page
 title: "Combinational Logic - Adders"
 categories: [Verilog]
-day: 30
+day: 30, 32
 ---
 
 ## 📌 Introduction
@@ -54,7 +54,28 @@ module top_module(
 endmodule
 ```
 
+### 4-bit Binary Ripple-Carry Adder
+![alt text](../assets/day32/4-bit.png)
+```verilog
+module FA(input a, input b, input cin, output sum, output cout);
+	assign sum = a ^ b ^ cin;
+    assign cout = (a & b) | (a & cin) | (b & cin);
+endmodule
+
+module top_module (
+    input [3:0] x,
+    input [3:0] y, 
+    output [4:0] sum);
+    wire [2:0] cout;
+    FA add0(.a(x[0]), .b(y[0]), .cin(1'b0), .sum(sum[0]), .cout(cout[0]));
+    FA add1(.a(x[1]), .b(y[1]), .cin(cout[0]), .sum(sum[1]), .cout(cout[1]));
+    FA add2(.a(x[2]), .b(y[2]), .cin(cout[1]), .sum(sum[2]), .cout(cout[2]));
+    FA add3(.a(x[3]), .b(y[3]), .cin(cout[2]), .sum(sum[3]), .cout(sum[4]));
+endmodule
+```
+
 ## 📚 Reference
 * [HDLBits Problem - Hadd](https://hdlbits.01xz.net/wiki/Hadd)
 * [HDLBits Problem - Fadd](https://hdlbits.01xz.net/wiki/Fadd)
 * [HDLBits Problem - Adder3](https://hdlbits.01xz.net/wiki/Adder3)
+* [HDLBits Problem - m2014_q4j](https://hdlbits.01xz.net/wiki/Exams/m2014_q4j)
