@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Generate for-loop"
+title: "Generate for-loop - ripple-carry adder & BCD ripple-carry adder"
 categories: [Verilog]
 day: 21
 ---
