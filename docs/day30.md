@@ -2,7 +2,7 @@
 layout: page
 title: "Combinational Logic - Adders"
 categories: [Verilog]
-day: 30, 32, 33
+day: [30, 32, 33]
 ---
 
 ## 📌 Introduction
