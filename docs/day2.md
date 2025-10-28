@@ -6,6 +6,7 @@ day: 2
 ---
 
 ## 📌 Introduction
+{% raw %}
 ```verilog
 module top_module (
     input [7:0] in,
@@ -16,6 +17,7 @@ module top_module (
 endmodule
 ```
 Notice that ```24{in[7]}```must be wrapped in ```{}``` because of its vector return.
+{% endraw %}
 
 ## 🧑‍💻 Code Example
 ![alt text](../assets/Vector5.png)
