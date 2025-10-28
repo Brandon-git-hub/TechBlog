@@ -12,8 +12,11 @@ Recent Interests:
 
 ## 📚 Recent Posts
 
-{% comment %} 1. 取得所有 docs 頁面，並過濾掉沒有 'day' 屬性的頁面 {% endcomment %}
-{% assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/' and p.day != nil" %}
+{% comment %} 0. 取得所有 docs 頁面 {% endcomment %}
+{% assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" %}
+
+{% comment %} 1. 過濾掉沒有 'day' 屬性的頁面 (p.day != nil) {% endcomment %}
+{% assign docs_pages = docs_pages | where_exp: "p", "p.day != nil" %}
 
 {% comment %} 2. 建立一個新陣列，包含頁面本身和一個用於排序的數字鍵值 (number_day) {% endcomment %}
 {% assign sortable_docs = '' | split: ',' %}
