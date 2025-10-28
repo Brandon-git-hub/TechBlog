@@ -19,12 +19,9 @@ Recent Interests:
   {% capture day_str %}{{ p.day }}{% endcapture %}
   {% assign day_str = day_str | replace: ' ', '' %}
   {% assign day_arr = day_str | split: ',' %}
-  {% assign maxd = -999999 %}
-  {% for d in day_arr %}
-    {% assign n = d | plus: 0 %}
-    {% if n > maxd %}{% assign maxd = n %}{% endif %}
-  {% endfor %}
-  {% assign key = maxd | prepend: '000000' | slice: -6, 6 %}
+  {% assign firstd = day_arr | first %}
+  {% assign n = firstd | plus: 0 %}
+  {% assign key = n | prepend: '000000' | slice: -6, 6 %}
   {% capture line %}{{ key }}|{{ p.url }}{% endcapture %}
   {% assign lines = lines | push: line %}
 {% endfor %}
