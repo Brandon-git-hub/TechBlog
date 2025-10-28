@@ -12,37 +12,42 @@ Recent Interests:
 
 ## 📚 Recent Posts
 
-{% comment %} 0. 取得所有 docs 頁面 {% endcomment %}
-{% assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" %}
+{%- comment -%} 1) 取出 docs 目錄下、且有 day 欄位的頁面 {%- endcomment -%}
+{%- assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" | where_exp: "p", "p.day != nil" -%}
 
-{% comment %} 1. 過濾掉沒有 'day' 屬性的頁面 (p.day != nil) {% endcomment %}
-{% assign docs_pages = docs_pages | where_exp: "p", "p.day != nil" %}
+{%- comment -%} 2) 將每頁轉成一行 <零填充day>|<url>，其中 day = 單值或陣列的最大值 {%- endcomment -%}
+{%- assign lines = '' | split: ',' -%}
+{%- for p in docs_pages -%}
+  {%- capture day_str -%}{{ p.day }}{%- endcapture -%}
+  {%- assign day_str = day_str | replace: ' ', '' -%}
+  {%- assign day_arr = day_str | split: ',' -%}
+  {%- assign maxd = -999999 -%}
+  {%- for d in day_arr -%}
+    {%- assign n = d | plus: 0 -%}
+    {%- if n > maxd -%}{%- assign maxd = n -%}{%- endif -%}
+  {%- endfor -%}
+  {%- comment -%} 零填充方便字典序排序（最多 6 位數） {%- endcomment -%}
+  {%- assign key = maxd | prepend: '000000' | slice: -6, 6 -%}
+  {%- assign line = key | append: '|' | append: p.url -%}
+  {%- assign lines = lines | push: line -%}
+{%- endfor -%}
 
-{% comment %} 2. 建立一個新陣列，包含頁面本身和一個用於排序的數字鍵值 (number_day) {% endcomment %}
-{% assign sortable_docs = '' | split: ',' %}
-{% for p in docs_pages %}
-  {% comment %} 取出 day 陣列或單一值的第一個元素，並用 | plus: 0 將其強制轉換為數字 {% endcomment %}
-  {% assign first_day_value = p.day | first | plus: 0 %} 
-  
-  {% comment %} **關鍵修正：** 建立一個乾淨的陣列，直接 push 頁面物件和數字鍵值，避免類型轉換錯誤。 {% endcomment %}
-  {% assign item = '' | split: ',' %} 
-  {% assign item = item | push: p %}
-  {% assign item = item | push: first_day_value %}
+{%- comment -%} 3) 依 key 排序、反轉讓最新在前 {%- endcomment -%}
+{%- assign sorted_lines = lines | sort | reverse -%}
 
-  {% assign sortable_docs = sortable_docs | push: item %}
-{% endfor %}
-
-{% comment %} 3. 對新陣列進行排序：使用第二個元素 (即 number_day) 進行數字排序 {% endcomment %}
-{% assign sorted_docs = sortable_docs | sort: 1 | reverse %}
-
-{% comment %} 4. 照常輸出，現在我們從 sorted_docs 的子陣列中取出頁面物件 p[0] {% endcomment %}
-{% capture posts_md %}
-{% for item in sorted_docs limit:10 %}
-  {% assign p = item[0] %}
-- 📌 [{{ p.title }}]({{ p.url | relative_url }})<br/>Category: <code>{% if p.categories %}{{ p.categories | join: ', ' }}{% else %}Uncategorized{% endif %}</code>
-{% endfor %}
-{% endcapture %}
-
-{{ posts_md | markdownify }}
+{%- comment -%} 4) 輸出清單：用 URL 回查頁面物件（即可存取 title、categories 等） {%- endcomment -%}
+<ul>
+{%- for line in sorted_lines limit: 10 -%}
+  {%- assign parts = line | split: '|' -%}
+  {%- assign url = parts[1] -%}
+  {%- assign p = site.pages | where: "url", url | first -%}
+  <li>
+    <a href="{{ p.url | relative_url }}">{{ p.title }}</a><br/>
+    <small>Category:
+      <code>{% if p.categories %}{{ p.categories | join: ', ' }}{% else %}Uncategorized{% endif %}</code>
+    </small>
+  </li>
+{%- endfor -%}
+</ul>
 
 <p><a href="{{ '/categories/' | relative_url }}">Browse by category →</a></p>
