@@ -19,6 +19,8 @@ Notice that ```24{in[7]}```must be wrapped in ```{}``` because of its vector ret
 
 ## 🧑‍💻 Code Example
 ![alt text](../assets/Vector5.png)
+
+{% raw %}
 ```verilog
 module top_module (
     input a, b, c, d, e,
@@ -28,6 +30,7 @@ module top_module (
 
 endmodule
 ```
+{% endraw %}
 
 
 ## 📚 Reference
