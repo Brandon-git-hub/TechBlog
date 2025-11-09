@@ -4,7 +4,11 @@
 @import "minima"; // 讓主題樣式先載入，再覆蓋
 
 .page .page-header { margin-bottom: 1.25rem; }
-.page .page-title   { margin-bottom: .25rem; }
+.page .page-title {
+  font-size: 2.75rem;   // 你可以改成 3rem、3.5rem，看你喜歡
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
 
 .page .page-meta {
   display: flex; align-items: center; gap: .5rem;
