@@ -3,6 +3,7 @@ layout: page
 title: "JTAG"
 categories: [Interfaces]
 day: 17
+date: 2025-09-21
 ---
 
 ## 📌 Joint Test Action Group

@@ -3,6 +3,7 @@ layout: page
 title: "Combinational Logic - Multiplexers"
 categories: [Verilog]
 day: 29
+date: 2025-10-20
 ---
 
 ## 📌 Introduction

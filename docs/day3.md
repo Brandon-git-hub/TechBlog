@@ -3,6 +3,7 @@ layout: page
 title: "Instantiate Module"
 categories: [Verilog]
 day: 3
+date: 2025-09-02
 ---
 
 ## 📌 Introduction

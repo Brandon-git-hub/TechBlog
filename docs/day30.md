@@ -3,6 +3,7 @@ layout: page
 title: "Combinational Logic - Adders"
 categories: [Verilog]
 day: 30, 32, 33
+date: 2025-10-21
 ---
 
 ## 📌 Introduction

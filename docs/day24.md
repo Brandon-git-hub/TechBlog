@@ -3,6 +3,7 @@ layout: page
 title: "Combine Circuit A & Circuit B"
 categories: [Verilog]
 day: 24
+date: 2025-10-07
 ---
 
 ## 📌 Introduction

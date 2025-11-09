@@ -3,6 +3,7 @@ layout: page
 title: "Latch"
 categories: [Verilog]
 day: 11
+date: 2025-09-10
 ---
 
 ## 📌 Introduction

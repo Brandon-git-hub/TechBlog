@@ -3,6 +3,7 @@ layout: page
 title: "FPGA JTAG Applications"
 categories: [Interfaces]
 day: 34
+date: 2025-10-26
 ---
 
 ## 📌 Introduction

@@ -3,6 +3,7 @@ layout: page
 title: "D flip-flop"
 categories: [Verilog]
 day: 36
+date: 2025-10-28
 ---
 
 ## 📌 Introduction

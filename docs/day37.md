@@ -3,6 +3,7 @@ layout: page
 title: "DFF with reset"
 categories: [Verilog]
 day: 37, 38
+date: 2025-10-29
 ---
 
 ## 📌 Introduction

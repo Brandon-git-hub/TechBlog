@@ -3,6 +3,7 @@ layout: page
 title: "2-bit Adder with Peripheral Control"
 categories: [FPGA]
 day: 31
+date: 2025-10-22
 ---
 
 ## 📌 Introduction

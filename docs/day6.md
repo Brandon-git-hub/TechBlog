@@ -3,6 +3,7 @@ layout: page
 title: "Ripple-Carry Adder"
 categories: [Verilog]
 day: 6
+date: 2025-09-05
 ---
 
 ## 📌 Introduction

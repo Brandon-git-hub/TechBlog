@@ -3,6 +3,7 @@ layout: page
 title: "Generate for-loop - ripple-carry adder & BCD ripple-carry adder"
 categories: [Verilog]
 day: 21
+date: 2025-10-03
 ---
 
 ## 📌 Introduction

@@ -3,6 +3,7 @@ layout: page
 title: "Generate"
 categories: [Verilog]
 day: 1
+date: 2025-08-31
 ---
 
 ## 📌 Introduction

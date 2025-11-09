@@ -3,6 +3,7 @@ layout: page
 title: "7400-series IC"
 categories: [Verilog]
 day: 23
+date: 2025-10-06
 ---
 
 ## 📌 Introduction

@@ -3,6 +3,7 @@ layout: page
 title: "Module shift + Mux"
 categories: [Verilog]
 day: 5
+date: 2025-09-04
 ---
 
 ## 📌 Introduction

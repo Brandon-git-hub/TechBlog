@@ -3,6 +3,7 @@ layout: page
 title: "Setup Environment"
 categories: [STM32 baremetal]
 day: 28
+date: 2025-10-18
 ---
 
 ## 📌 Installation

@@ -3,6 +3,7 @@ layout: page
 title: "Combinational Logic - Basic Gates"
 categories: [Verilog]
 day: 22
+date: 2025-10-06
 ---
 
 ## 📌 Introduction

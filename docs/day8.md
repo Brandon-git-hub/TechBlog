@@ -3,6 +3,7 @@ layout: page
 title: "Adder–subtractor"
 categories: [Verilog]
 day: 8
+date: 2025-09-07
 ---
 
 ## 📌 Introduction

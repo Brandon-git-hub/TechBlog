@@ -3,6 +3,7 @@ layout: page
 title: "4-to-2 Priority Encoder"
 categories: [Verilog]
 day: 13
+date: 2025-09-16
 ---
 
 ## 📌 Introduction

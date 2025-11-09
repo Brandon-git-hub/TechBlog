@@ -3,6 +3,7 @@ layout: page
 title: "Combinational Logic - 3-bit population"
 categories: [Verilog]
 day: 26
+date: 2025-10-15
 ---
 
 ## 📌 Introduction

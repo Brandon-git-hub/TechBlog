@@ -3,6 +3,7 @@ layout: page
 title: "Module shift"
 categories: [Verilog]
 day: 4
+date: 2025-09-03
 ---
 
 ## 📌 Introduction

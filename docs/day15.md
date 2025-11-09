@@ -3,6 +3,7 @@ layout: page
 title: "Avoid Latches"
 categories: [Verilog]
 day: 15
+date: 2025-09-18
 ---
 
 ## 🧑‍💻 Code Example

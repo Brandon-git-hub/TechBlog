@@ -3,6 +3,7 @@ layout: page
 title: "Reduction Operators"
 categories: [Verilog]
 day: 19
+date: 2025-09-27
 ---
 
 ## 📌 Introduction

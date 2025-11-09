@@ -3,6 +3,7 @@ layout: page
 title: "DFF and Gates"
 categories: [Verilog]
 day: 40
+date: 2025-11-08
 ---
 
 ## 📌 Introduction

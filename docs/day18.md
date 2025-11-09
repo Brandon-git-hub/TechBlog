@@ -3,6 +3,7 @@ layout: page
 title: "Conditional ternary operator"
 categories: [Verilog]
 day: 18
+date: 2025-09-23
 ---
 
 ## 📌 Introduction

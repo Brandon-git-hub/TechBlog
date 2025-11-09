@@ -3,6 +3,7 @@ layout: page
 title: "Carry-select adder"
 categories: [Verilog]
 day: 7
+date: 2025-09-07
 ---
 
 ## 📌 Introduction

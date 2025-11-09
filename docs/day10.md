@@ -3,6 +3,7 @@ layout: page
 title: "Always if vs. Continuous assignment"
 categories: [Verilog]
 day: 10
+date: 2025-09-09
 ---
 
 ## 📌 Introduction

@@ -3,6 +3,7 @@ layout: page
 title: "D Flip-Flop with Reset"
 categories: [Verilog]
 day: 39
+date: 2025-11-07
 ---
 
 ## 📌 **Introduction**

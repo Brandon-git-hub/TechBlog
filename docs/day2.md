@@ -3,6 +3,7 @@ layout: page
 title: "Vector Replication"
 categories: [Verilog]
 day: 2
+date: 2025-09-01
 ---
 
 ## 📌 Introduction

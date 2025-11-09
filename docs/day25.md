@@ -3,6 +3,7 @@ layout: page
 title: "Think Backwards: Designing Hardware from Outputs to Inputs"
 categories: [Verilog]
 day: 25
+date: 2025-10-12
 ---
 
 ## 📌 Introduction

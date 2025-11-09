@@ -3,6 +3,7 @@ layout: page
 title: "casez"
 categories: [Verilog]
 day: 14
+date: 2025-09-17
 ---
 
 ## 📌 Introduction

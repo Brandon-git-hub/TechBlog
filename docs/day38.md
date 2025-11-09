@@ -3,6 +3,7 @@ layout: page
 title: "D Latch"
 categories: [Verilog]
 day: 38
+date: 2025-11-05
 ---
 
 ## 📌 Introduction

@@ -3,6 +3,7 @@ layout: page
 title: "Combinational for-loop"
 categories: [Verilog]
 day: 20
+date: 2025-10-01
 ---
 
 ## 📌 Introduction

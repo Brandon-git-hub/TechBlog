@@ -3,6 +3,7 @@ layout: page
 title: "Always Blocks"
 categories: [Verilog]
 day: 9
+date: 2025-09-08
 ---
 
 ## 📌 Introduction
