@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<article class="page container">
+  <header class="page-header">
+    <h1 class="page-title">{{ page.title }}</h1>
+
+    {% if page.date %}
+    <p class="page-meta">
+      <span class="cal-emoji" aria-hidden="true">📅</span>
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%Y-%m-%d" }}
+      </time>
+      {% if page.categories and page.categories.size > 0 %}
+        <span class="dot">•</span>
+        <span class="cats">
+          {{ page.categories | join: ", " }}
+        </span>
+      {% endif %}
+    </p>
+    {% endif %}
+  </header>
+
+  <section class="page-content">
+    {{ content }}
+  </section>
+</article>

@@ -5,7 +5,6 @@ categories: [Verilog]
 day: 40
 date: 2025-11-08
 ---
-<p><small>🗓️ {{ page.date | date: "%Y-%m-%d" }}</small></p>
 
 ## 📌 Introduction
 In this exercise, I explore how D flip-flops interact with basic gates and multiplexers to form sequential circuits.
