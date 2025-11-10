@@ -13,7 +13,7 @@ Depending on the input combination, it can hold, set, reset, or toggle its outpu
 
 ### Truth Table
 | J | K | Q(next) | Description |
-|------|-------|--------| ------|
+|------|------------------|---------------|--------------|
 | 0 | 0 | Q(old)  | Hold (no change) |
 | 0 | 1 | 0       | Reset |
 | 1 | 0 | 1       | Set |
