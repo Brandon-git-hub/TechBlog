@@ -12,8 +12,9 @@ It has two inputs, **J** and **K**, and one output **Q**.
 Depending on the input combination, it can hold, set, reset, or toggle its output.
 
 ### Truth Table
+
 | J | K | Q(next) | Description |
-|------|------------------|---------------|--------------|
+|----|----|---------|-----------|
 | 0 | 0 | Q(old)  | Hold (no change) |
 | 0 | 1 | 0       | Reset |
 | 1 | 0 | 1       | Set |
