@@ -14,6 +14,7 @@ date: 2025-10-22
 This mini project implements a 2-bit adder that the user can trigger with buttons. The operands come from slide switches, and the result is displayed on the LEDs. A single-cycle pulse is generated on the falling edge of the active-low Start button to latch the result.
 
 ## 🔧 Pin Mapping (DE0-Nano)
+
 | Function   | Pin (suggested) | Note                       |
 | ---------- | --------------- | -------------------------- |
 | `KEY1`     | Start           | Active-low, triggers A + B |
