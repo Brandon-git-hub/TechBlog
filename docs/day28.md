@@ -20,6 +20,7 @@ Source：
 > choose .exe, and tick ```add to env path``` after installation completed.
 
 ### 🧠 2. CMD
+
 | CMD                      | Function               | Note                   |
 | ----------------------- | ---------------- | -------------------- |
 | `arm-none-eabi-gcc`     | C/C++ Compiler        |  For ARM Cortex-M (baremetal) |
