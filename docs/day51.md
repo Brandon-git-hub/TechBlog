@@ -2,7 +2,7 @@
 layout: page
 title: "從零開始使用Esp32開發板"
 categories: [Esp32]
-day: 51, 52
+day: 51
 date: 2025-12-05
 ---
 
