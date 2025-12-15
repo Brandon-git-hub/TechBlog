@@ -38,16 +38,16 @@ layout: default
   <hr>
 
   <nav class="post-navigation">
-    {% if page.next.url %}
-      <span class="next">
-        Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
-      </span>
-    {% endif %}
-    {% if page.previous.url %}
-      <span class="previous">
-        Previous: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
-      </span>
-    {% endif %}
+      {% if page.previous.url %}
+          <p class="previous">
+              Previous: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
+          </p>
+      {% endif %}
+      {% if page.next.url %}
+          <p class="next">
+              Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
+          </p>
+      {% endif %}
   </nav>
 
 </article>
