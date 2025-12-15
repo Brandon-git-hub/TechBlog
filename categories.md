@@ -4,10 +4,10 @@ title: "Categories"
 permalink: /categories/
 ---
 
-{% assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" %}
+{% assign posts = site.posts %}
 
 {% assign all_cats = "" | split: "" %}
-{% for p in docs_pages %}
+{% for p in posts %}
 {% if p.categories %}
 {% for c in p.categories %}
 {% assign all_cats = all_cats | push: c %}
@@ -33,7 +33,7 @@ permalink: /categories/
 ### {{ c }}
 
 {% capture list_md %}
-{% for p in docs_pages %}
+{% for p in posts %}
 {% if p.categories and p.categories contains c %}
 - 📌 [{{ p.title }}]({{ p.url | relative_url }})
 {% endif %}

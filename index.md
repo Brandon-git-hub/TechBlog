@@ -12,27 +12,8 @@ Recent Interests:
 
 ## 📚 Recent Posts
 
-{% assign docs_pages = site.pages | where_exp: "p", "p.path contains 'docs/'" | where_exp: "p", "p.day != nil" %}
-
-{% assign lines = '' | split: ',' %}
-{% for p in docs_pages %}
-  {% capture day_str %}{{ p.day }}{% endcapture %}
-  {% assign day_str = day_str | replace: ' ', '' %}
-  {% assign day_arr = day_str | split: ',' %}
-  {% assign firstd = day_arr | first %}
-  {% assign n = firstd | plus: 0 %}
-  {% assign key = n | prepend: '000000' | slice: -6, 6 %}
-  {% capture line %}{{ key }}|{{ p.url }}{% endcapture %}
-  {% assign lines = lines | push: line %}
-{% endfor %}
-
-{% assign sorted_lines = lines | sort | reverse %}
-
 {% capture list_md %}
-{% for line in sorted_lines limit:10 %}
-  {% assign parts = line | split: '|' %}
-  {% assign url = parts[1] %}
-  {% assign p = site.pages | where: "url", url | first %}
+{% for p in site.posts limit:10 %}
 - 📌 [{{ p.title }}]({{ p.url | relative_url }})  
   <small>Category: <code>{% if p.categories %}{{ p.categories | join: ', ' }}{% else %}Uncategorized{% endif %}</code></small>
 {% endfor %}
