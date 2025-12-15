@@ -37,16 +37,23 @@ layout: default
   
   <hr>
 
-  <nav class="post-navigation">
+  <nav class="post-navigation" style="display: flex; justify-content: space-between; margin-top: 20px;">
       {% if page.previous.url %}
-          <p class="previous">
-              Previous: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
+          <p class="previous" style="margin: 0;">
+              ⬅️ Previous: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
           </p>
       {% endif %}
+
       {% if page.next.url %}
-          <p class="next">
-              Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
-          </p>
+          {% unless page.previous.url %}
+              <p class="next" style="margin: 0;">
+                  Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a> ➡️
+              </p>
+          {% else %}
+              <p class="next" style="margin: 0;">
+                  Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a> ➡️
+              </p>
+          {% endunless %}
       {% endif %}
   </nav>
 

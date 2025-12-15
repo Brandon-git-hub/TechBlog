@@ -53,10 +53,7 @@ usbipd-win
 
 ### 安裝ESP-IDF 在 Docker Container
 
-開啟新資料夾後，這邊同時建議可以加入git管理。
-```bash
-git init
-```
+開啟新資料夾後，這邊同時建議可以加入git管理 (```git init```)。
 
 然後我們透過快捷鍵 ```ctrl + shit + p```，叫出Command Palette。
 搜尋 ```Dev Container: Add Dev Container Configuration Files```，創建我們的設定檔。
@@ -125,7 +122,7 @@ Dev Containers: Open Workspace in Container...
 這時可以同時按板子上的Boot與Reset按鈕，進入燒錄模式。
 > 板子上的BOOT按鈕，按下時下拉GPIO9 Pin，否則預設Reset完進入SPI boot mode
 
-<img src="{{ '/assets/day51/Chip_Boot_Mode_Control.png' | relative_url }}" alt="Boot Mode" width="350">
+<img src="{{ '/assets/day51/Chip_Boot_Mode_Control.png' | relative_url }}" alt="Boot Mode" width="700">
 
 > In **Joint Download Boot mode**, users can download binary files into flash using UART0 or USB interface. It is also possible to download binary files into SRAM and execute it from SRAM.
 > 
