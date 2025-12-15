@@ -1,0 +1,61 @@
+---
+layout: default
+---
+
+<article class="post container">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+
+    {% comment %} 顯示文章的元數據：日期、分類 {% endcomment %}
+    <p class="post-meta">
+      {# 1. 日期 #}
+      {% if page.date %}
+      <span class="cal-emoji" aria-hidden="true">📅</span>
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%Y-%m-%d" }}
+      </time>
+      {% endif %}
+
+      {# 2. 分類 #}
+      {% if page.categories and page.categories.size > 0 %}
+        <span class="dot">•</span>
+        <span class="cats">
+          Category: 
+          {% for category in page.categories %}
+            <a href="{{ site.baseurl }}/categories/#{{ category | slugify }}">{{ category }}</a>{% unless forloop.last %}, {% endunless %}
+          {% endfor %}
+        </span>
+      {% endif %}
+
+      {# 3. 加入作者資訊 (選用，您可以刪除或修改) #}
+      <span class="dot">•</span>
+      <span class="author-info">
+        Author: Brandon # 這裡使用您的名字進行客製化
+      </span>
+    </p>
+  </header>
+
+  {# 核心文章內容 #}
+  <section class="post-content">
+    {{ content }}
+  </section>
+  
+  <hr>
+
+  {# 導航：上一篇/下一篇 (選用功能，讓讀者可以方便切換文章) #}
+  {% if site.minima.show_post_navigation %}
+  <nav class="post-navigation">
+    {% if page.next.url %}
+      <span class="next">
+        Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
+      </span>
+    {% endif %}
+    {% if page.previous.url %}
+      <span class="previous">
+        Previous: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
+      </span>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+</article>
