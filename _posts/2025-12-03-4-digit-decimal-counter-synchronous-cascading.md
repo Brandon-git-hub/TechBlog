@@ -43,9 +43,11 @@ endmodule
 ```
 > ```ena```由於作為輸出，最好不要又做為內部的集聯，另外宣告```wire```供內部使用。
 
-![alt text](/assets/day50/Counting.png)
-![alt text](/assets/day50/100_rollover_1.png)
-![alt text](/assets/day50/100_rollover_2.png)
+<img src="{{ '/assets/day50/Counting.png' | relative_url }}" width="700">
+
+<img src="{{ '/assets/day50/100_rollover_1.png' | relative_url }}" width="700">
+
+<img src="{{ '/assets/day50/100_rollover_2.png' | relative_url }}" width="700">
 
 ## 📚 Reference
 * [HDLBits Problem - Countbcd](https://hdlbits.01xz.net/wiki/Countbcd)

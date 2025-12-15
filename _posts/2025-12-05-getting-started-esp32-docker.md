@@ -9,10 +9,10 @@ date: 2025-12-05
 
 ### 硬體
 
-* 開發板: ESP32-C3-SuperMini [Datasheet Link](/assets/day51/ESP32-C3%20SuperMini%20datasheet.pdf)
+* 開發板: ESP32-C3-SuperMini [Datasheet Link]({{ site.baseurl }}/assets/day51/ESP32-C3_SuperMini_datasheet.pdf)
 * 配件: USB-TypeC 線 
 
-<img src="/assets/day51/ESP32-C3-SuperMini.png" alt="ESP32-C3-SuperMini" width="200" />
+<img src="{{ '/assets/day51/ESP32-C3-SuperMini.png' | relative_url }}" alt="ESP32-C3-SuperMini" width="200">
 
 ### 軟體
 
@@ -21,7 +21,7 @@ date: 2025-12-05
 * 開發環境之IDE: Visual Studio Code 
 * 開發環境之SDK: Esp-idf v5.5.1
 
-<img src="/assets/day51/Software_Enviroment.png" alt="Software Enviroment" width="350" />
+<img src="{{ '/assets/day51/Software_Enviroment.png' | relative_url }}" alt="Software Enviroment" width="350">
 
 > * **Toolchain** to compile code for ESP32 
 > * **Build tools** - CMake and Ninja to build a full Application for ESP32 
@@ -125,11 +125,11 @@ Dev Containers: Open Workspace in Container...
 這時可以同時按板子上的Boot與Reset按鈕，進入燒錄模式。
 > 板子上的BOOT按鈕，按下時下拉GPIO9 Pin，否則預設Reset完進入SPI boot mode
 
-<img src="/assets/day51/Chip_Boot_Mode_Control.png" alt="Boot Mode" width="350" />
+<img src="{{ '/assets/day51/Chip_Boot_Mode_Control.png' | relative_url }}" alt="Boot Mode" width="350">
 
 > In **Joint Download Boot mode**, users can download binary files into flash using UART0 or USB interface. It is also possible to download binary files into SRAM and execute it from SRAM.
 > 
-> [esp32-c3_datasheet_en](/assets/day51/esp32-c3_datasheet_en.pdf)
+> [esp32-c3_datasheet_en]({{ site.baseurl }}/assets/day51/esp32-c3_datasheet_en.pdf)
 
 ## 🧑‍💻 Code Example
 
