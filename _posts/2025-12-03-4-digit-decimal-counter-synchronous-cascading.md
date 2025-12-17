@@ -47,7 +47,7 @@ endmodule
 
 <img src="{{ '/assets/day50/100_rollover_1.png' | relative_url }}" width="700">
 
-<img src="{{ '/assets/day50/100_rollover_2.png' | relative_url }}" width="350">
+<img src="{{ '/assets/day50/100_rollover_2.png' | relative_url }}" width="400">
 
 ## 📚 Reference
 * [HDLBits Problem - Countbcd](https://hdlbits.01xz.net/wiki/Countbcd)

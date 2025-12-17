@@ -35,8 +35,8 @@ JTAG chain OK
 
 ### Setup
 <!-- ![alt text](../assets/day34/SignalTap_setup.png) -->
-<img src="{{ '/assets/day34/SignalTap_setup.png' | relative_url }}" width="700">
+<img src="{{ '/assets/day34/SignalTap_setup.png' | relative_url }}" width="750">
 
 ### Data
 <!-- ![alt text](../assets/day34/SignalTap_data.png) -->
-<img src="{{ '/assets/day34/SignalTap_data.png' | relative_url }}" width="700">
+<img src="{{ '/assets/day34/SignalTap_data.png' | relative_url }}" width="750">

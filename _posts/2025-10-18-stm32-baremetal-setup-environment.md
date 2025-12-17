@@ -15,8 +15,10 @@ Source：
 #### ✅ Version Suggestion (Windows)
 
 > **Windows x86_64 hosted cross compiler for Arm Cortex-M and Cortex-R processors (bare-metal target)**
+
 <!-- ![alt text](../assets/day28/bare-metal_version.png) -->
 <img src="{{ '/assets/day28/bare-metal_version.png' | relative_url }}" width="600">
+
 > choose .exe, and tick ```add to env path``` after installation completed.
 
 ### 🧠 2. CMD
