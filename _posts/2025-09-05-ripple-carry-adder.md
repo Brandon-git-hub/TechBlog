@@ -7,6 +7,9 @@ date: 2025-09-05
 
 ## 📌 Introduction
 
+<!-- ![alt text](../assets/day6/Module_add.png) -->
+<img src="{{ '/assets/day6/Module_add.png' | relative_url }}" width="500">
+
 <!-- ![alt text](../assets/day6/Module_fadd.png) -->
 <img src="{{ '/assets/day6/Module_fadd.png' | relative_url }}" width="350">
 
