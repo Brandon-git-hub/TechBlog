@@ -18,7 +18,7 @@ TMS (Test Mode Select) – this signal is sampled at the rising edge of TCK to d
 
 ## 📚 Reference
 <!-- * [JTAG_IEEE-Std-1149.1-2001](/assets/day17/JTAG_IEEE-Std-1149.1-2001.pdf) -->
-* [JTAG_IEEE-Std-1149.1-2001]({{ site.baseurl }}/assets/day17/JTAG_IEEE-Std-1149.1-2001.pdf)
+* IEEE Standard Test Access Port and Boundary-Scan Architecture, IEEE Std 1149.1-2001.
 * [XJTAG - What is JTAG and how can I make use of it?](https://www.xjtag.com/about-jtag/what-is-jtag/?v=255a5cac7685)
 * [XJTAG - Technical Guide to JTAG](https://www.xjtag.com/about-jtag/jtag-a-technical-overview/?v=255a5cac7685)
 * [JTAG协议及接口](https://blog.csdn.net/worf1234/article/details/7312184)
