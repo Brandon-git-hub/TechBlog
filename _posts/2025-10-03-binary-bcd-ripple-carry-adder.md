@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Generate for-loop - ripple-carry adder & BCD ripple-carry adder"
+title: "Binary/BCD ripple-carry adder (Generate for-loop)"
 categories: [Verilog]
 date: 2025-10-03
 ---
