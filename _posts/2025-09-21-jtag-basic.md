@@ -21,7 +21,7 @@ lang: zh-Hant
 ### JTAG 功能
 
 <!-- ![alt text](../assets/day17/JTAG_Func.png) -->
-<img src="{{ '/assets/day17/JTAG_Func.png' | relative_url }}" width="400">
+<img src="{{ '/assets/day17/JTAG_Func.png' | relative_url }}" width="300">
 
 除了一般使用者會用到的在板燒錄 (In-System Programming)。
 JTAG透過基於4線通訊架構，可做到Debug IC core與測試周邊連接的元件等等功能。
@@ -29,7 +29,7 @@ JTAG透過基於4線通訊架構，可做到Debug IC core與測試周邊連接�
 ### JTAG 組成
 
 <!-- ![alt text](../assets/day17/Schematic_Diagram_of_a_JTAG_enabled_device.png) -->
-<img src="{{ '/assets/day17/Schematic_Diagram_of_a_JTAG_enabled_device.png' | relative_url }}" width="350">
+<img src="{{ '/assets/day17/Schematic_Diagram_of_a_JTAG_enabled_device.png' | relative_url }}" width="450">
 
 JTAG架構的核心是Test Access Port (TAP) Controller，其由16個state組成，而外部則由下面定義的介面，進行控制與輸入輸出。
 
