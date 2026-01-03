@@ -2,7 +2,7 @@
 layout: post
 title: "Left/right arithmetic shift by 1 or 8"
 categories: [Verilog]
-date: 2026-01-04
+date: 2026-01-03
 ---
 
 ## 📌 Question
@@ -88,3 +88,4 @@ endmodule
 
 ## 📚 Reference
 * [HDLBits Problem - Shift18](https://hdlbits.01xz.net/wiki/Shift18)
+
