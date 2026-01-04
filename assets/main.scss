@@ -3,15 +3,20 @@
 
 @import "minima"; /* 讓主題樣式先載入，再覆蓋 */
 
-.page-header { margin-bottom: 1rem; }
 .page-title {
   font-size: 2.8rem;   // 你可以改成 3rem、3.5rem，看你喜歡
   font-weight: 400;    // Regular
-  margin-bottom: .2rem;
+  margin-bottom: .5rem;
+}
+
+.post-title {
+  font-size: 2.8rem;   // 你可以改成 3rem、3.5rem，看你喜歡
+  font-weight: 400;    // Regular
+  margin-bottom: 1rem;
 }
 
 .post-subtitle {
-  font-size: 1.8rem;   /* 比主標題小一點 */
+  font-size: 1.5rem;   /* 比主標題小一點 */
   font-weight: 300;    /* 用較細的字重增加高級感 */
   color: #6b7280;      /* 使用你 meta 用的灰色 */
   line-height: 1.4;
@@ -19,17 +24,17 @@
   margin-bottom: .2rem;
 }
 
-.post-meta {
-  margin-top: .1rem;
-}
-
-.page .page-meta {
-  display: flex; align-items: center; gap: .5rem;
-  font-size: .95rem; color: #6b7280; /* gray-500 */
+.page-meta .post-meta {
+  display: flex; 
+  align-items: center; 
+  gap: .5rem;
+  font-size: .95rem; 
+  color: #6b7280;                    /* gray-500 */
   background: #f3f4f6;               /* gray-100 */
   border: 1px solid #e5e7eb;         /* gray-200 */
-  padding: .375rem .625rem; border-radius: .5rem;
+  padding: .375rem .625rem; 
+  border-radius: .5rem;
   width: fit-content;
 }
-.page .page-meta .cal-emoji { line-height: 1; }
-.page .page-meta .dot { opacity: .6; margin: 0 .125rem; }
+.page-meta .post-meta .cal-emoji { line-height: 1; }
+.page-meta .post-meta .dot { opacity: .6; margin: 0 .125rem; }
