@@ -42,4 +42,4 @@ endmodule
 ```
 
 ## 📚 Reference
-* [HDLBits Problem - ](https://hdlbits.01xz.net/wiki/Rotate100)
+* [HDLBits Problem - Rotate100](https://hdlbits.01xz.net/wiki/Rotate100)
