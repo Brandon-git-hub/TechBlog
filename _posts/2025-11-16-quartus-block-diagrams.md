@@ -3,6 +3,7 @@ layout: post
 title: "Quartus Block Diagrams: RTL View & Technology Map"
 categories: [FPGA, EDA]
 date: 2025-11-16
+lang: zh-Hant
 ---
 
 ## 📌 Introduction

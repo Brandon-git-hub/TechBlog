@@ -3,6 +3,7 @@ layout: post
 title: "從零開始使用Esp32開發板 (Docker)"
 categories: [Esp32]
 date: 2025-12-05
+lang: zh-Hant
 ---
 
 ## 📌 開發環境簡介

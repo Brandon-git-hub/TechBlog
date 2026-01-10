@@ -3,6 +3,7 @@ layout: post
 title: "Karnaugh map"
 categories: [Verilog]
 date: 2025-10-26
+lang: zh-Hant
 ---
 
 ## 📌 Introduction
