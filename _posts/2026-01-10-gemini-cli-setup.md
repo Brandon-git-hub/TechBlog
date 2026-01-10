@@ -2,10 +2,9 @@
 layout: post
 title: "Gemini CLI 設定指南"
 subtitle: "在命令列介面中與 Gemini 模型互動"
-author: "BrandonWu"
 categories: [Gemini CLI]
 date: 2026-01-10
-lang: zh-TW
+lang: zh-Hant
 ---
 
 ## 📌 Gemini CLI 簡單介紹
@@ -21,7 +20,7 @@ Gemini CLI 就是為了滿足這些需求而設計的工具。
 <!-- ![alt text](/assets/26_0110/Gemini_CLI_Begin.png) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0110/Gemini_CLI_Begin.png' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0110/Gemini_CLI_Begin.png' | relative_url }}" width="700">
 </p>
 
 
@@ -56,7 +55,7 @@ gemini-cli --version
 <!-- ![alt text](/assets/26_0110/Google_AI_Studio.png) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0110/Google_AI_Studio.png' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0110/Google_AI_Studio.png' | relative_url }}" width="700">
 </p>
 
 由於建立API金鑰需要導入專案，因此如果你還沒有專案的話，請先建立一個新的專案，然後再點擊「Create API Key」按鈕來生成你的API金鑰。
@@ -88,7 +87,7 @@ Gemini CLI 透過node.js建立了一個方便的命令列介面，因此我們�
 <!-- ![alt text](/assets/26_0110/Gemini_CLI_Begin.png) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0110/Gemini_CLI_Begin.png' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0110/Gemini_CLI_Begin.png' | relative_url }}" width="700">
 </p>
 
 ### ```/help```指令
