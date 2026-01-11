@@ -67,6 +67,7 @@ gemini-cli --version
 取得API金鑰後，接下來我們需要將它設定到系統的環境變數中。
 請依照以下步驟進行：
 
+For windows系統：
 ```bash
 # 永久設定API金鑰, 設定完成另開一個新的終端機視窗才會生效
 setx GEMINI_API_KEY "你的API金鑰"
@@ -74,10 +75,22 @@ setx GEMINI_API_KEY "你的API金鑰"
 echo $env:GEMINI_API_KEY  
 ```
 
+For Linux系統：
+```bash
+# 永久設定API金鑰, 將以下指令加入到~/.bashrc或~/.zshrc中
+nano ~/.bashrc  # 或 nano ~/.zshrc
+# 在檔案末尾加入以下一行
+export GEMINI_API_KEY="你的API金鑰"
+# 使設定立即生效
+source ~/.bashrc  # 或 source ~/.zshrc
+# 確認是否設定成功
+echo $GEMINI_API_KEY
+```
+
 完成設定後，我們就可以開始使用Gemini CLI來與模型互動了！
 
 ```bash
-gemini-cli chat "Hello, Gemini!"
+gemini "Hello, Gemini!"
 ```
 
 ## ⚙️ 基礎設定與使用
@@ -110,8 +123,9 @@ Gemini CLI 透過node.js建立了一個方便的命令列介面，因此我們�
 接下來介紹一個我很喜歡的功能：```/init```指令。
 這個指令可以快速總覽目前工作區中的檔案，並生成一個新的```GEMINI.md```檔案，裡面會包含目前工作區中所有檔案的摘要說明。
 這樣我們就可以很方便地讓模型了解我們目前的專案狀況，並且可以直接在互動式模式中引用這些檔案的內容。
-可以使用```/memory list```語法來查看目前的記憶內容，其中就會包含剛剛```GEMINI.md```的檔案。
-當然```/memory add```也可以手動新增記憶內容，讓我們省去每次都要重新說明的麻煩。
+
+生成```GEMINI.md```檔案後，可以使用```/memory list```語法來查看目前的記憶內容，如果沒有剛生成的```GEMINI.md```檔案，請使用```/memory refresh```指令來更新記憶內容。
+另外```/memory add```也可以手動新增記憶內容，其內容最好是與所有專案都通用的說明，讓我們省去每次進入互動式模式都要重新說明的麻煩。
 
 ### ```/quit```指令
 
