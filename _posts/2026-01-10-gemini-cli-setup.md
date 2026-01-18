@@ -27,15 +27,24 @@ Gemini CLI 就是為了滿足這些需求而設計的工具。
 
 ## 🧑‍💻 安裝說明
 
-安裝Gemini CLI 需要Node.js環境，我這裡選擇安裝在conda虛擬環境中。
+安裝Gemini CLI 需要Node.js環境。
+
+我這裡選擇安裝在conda虛擬環境中，並且一致使用`conda-forge`頻道來安裝相關套件，避免一些相依性問題。
+
 安裝上程序很簡單，請依照以下步驟進行：
 
 ```bash
 # 建立並啟動conda虛擬環境, 建議使用Python 3.12以上版本
-conda create -n gemini-cli -p python=3.14 -y
+conda create -n gemini-cli -c conda-forge python=3.14 -y
 conda activate gemini-cli
+# 設定通道優先級
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+# 確認通道設定
+conda config --show channels
+conda config --show channel_priority
 # 安裝Node.js
-conda install -c conda-forge nodejs -y
+conda install nodejs -y
 # 安裝Gemini CLI
 npm install -g @google/gemini-cli
 ```
@@ -43,12 +52,15 @@ npm install -g @google/gemini-cli
 確認安裝成功：
 
 ```bash
-gemini-cli --version
+gemini --version
 ```
 
 ## 🔔 設定API說明
 
 安裝完成後，接下來需要設定我們的API金鑰。
+
+### 取得API金鑰
+
 請先前往 [Google AI Studio](https://ai.google.com/studio) 申請並取得你的API金鑰。
 在下面圖中的頁面的左側選單中，點擊「Get API Key」選項，進入後右上角會看到「Create API Key」按鈕。
 
@@ -65,9 +77,10 @@ gemini-cli --version
 如果擔心目前的額度使用不夠，可以在API Keys的右側找到view usage按鈕，點擊後可以看到目前的各模型使用狀況以及剩餘額度。
 
 取得API金鑰後，接下來我們需要將它設定到系統的環境變數中。
-請依照以下步驟進行：
+以下分別介紹在Windows和Linux系統中如何設定環境變數。
 
-For windows系統：
+### Windows系統
+
 ```bash
 # 永久設定API金鑰, 設定完成另開一個新的終端機視窗才會生效
 setx GEMINI_API_KEY "你的API金鑰"
@@ -75,7 +88,17 @@ setx GEMINI_API_KEY "你的API金鑰"
 echo $env:GEMINI_API_KEY  
 ```
 
-For Linux系統：
+若要進一步確認, 修改, 或者移除，需到登錄檔（Registry）中查看或修改：
+1. 開啟「執行」視窗（Win + R），輸入`regedit`並按下Enter鍵。
+2. 導航到`HKEY_CURRENT_USER\Environment`，點擊後右側會顯示所有使用者環境變數。
+
+<!-- ![](/assets/26_0110/Environment_variable.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0110/Environment_variable.png' | relative_url }}" width="380">
+</p>
+
+### Linux系統
+
 ```bash
 # 永久設定API金鑰, 將以下指令加入到~/.bashrc或~/.zshrc中
 nano ~/.bashrc  # 或 nano ~/.zshrc
@@ -87,10 +110,12 @@ source ~/.bashrc  # 或 source ~/.zshrc
 echo $GEMINI_API_KEY
 ```
 
+### 測試設定是否成功
+
 完成設定後，我們就可以開始使用Gemini CLI來與模型互動了！
 
 ```bash
-gemini "Hello, Gemini!"
+gemini -p "Hello, Gemini!"
 ```
 
 ## ⚙️ 基礎設定與使用
