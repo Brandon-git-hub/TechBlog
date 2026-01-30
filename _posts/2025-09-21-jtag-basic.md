@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "JTAG 基礎認識"
-categories: [Interfaces]
+categories: [Interfaces, JTAG]
 date: 2025-09-21
 lang: zh-Hant
 ---

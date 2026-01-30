@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "FPGA JTAG Applications"
-categories: [Interfaces]
+categories: [Interfaces, JTAG]
 date: 2025-10-26
 ---
 
