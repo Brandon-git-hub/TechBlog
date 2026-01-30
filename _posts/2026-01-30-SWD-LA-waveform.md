@@ -37,12 +37,12 @@ lang: zh-Hant
 拆開其外殼後，可以看到其內部使用的是 **芯佰微 (CoreBai)** 的 **CBM9002A** 晶片，這是一款基於 8051 核心的 USB 微控制器。
 <!-- ![](/assets/26_0130/LA_Inter.jpg) -->
 <p align="center">
-<img src="{{ '/assets/26_0130/LA_Inter.png' | relative_url }}" width="400">
+<img src="{{ '/assets/26_0130/LA_Inter.jpg' | relative_url }}" width="400">
 </p>
 
 <!-- ![](/assets/26_0130/LA_IC.jpg) -->
 <p align="center">
-<img src="{{ '/assets/26_0130/LA_IC.png' | relative_url }}" width="200">
+<img src="{{ '/assets/26_0130/LA_IC.jpg' | relative_url }}" width="200">
 </p>
 
 搭配的軟體是 **sigrok** 的 **PulseView**，這是一款開源且跨平台的邏輯分析軟體，支援多種硬體設備。
@@ -54,7 +54,7 @@ lang: zh-Hant
 
 <!-- ![](/assets/26_0130/HW_Tools.jpg) -->
 <p align="center">
-<img src="{{ '/assets/26_0130/HW_Tools.png' | relative_url }}" width="600">
+<img src="{{ '/assets/26_0130/HW_Tools.jpg' | relative_url }}" width="600">
 </p>
 
 附上其 Debug Connector 的腳位表:
