@@ -107,7 +107,7 @@ lang: zh-Hant
 <img src="{{ '/assets/26_0130/SWD_successful_read_operation.png' | relative_url }}" width="700">
 </p>
 
-SWD 不同於 JTAG 有 IDCODE instrunction，其走的是封包概念，所以當我們要讀取 Chip ID 時，會透過 SWD 讀取 DPIDR (Debug Port ID Register) 來取得，而其位址為 `0x00`。
+SWD 不同於 JTAG 有 IDCODE instrunction，其走的是封包概念，所以當我們要辨識其 SW-DP 時，會透過 SWD 讀取 DPIDR (Debug Port ID Register) 來取得，而其位址為 `0x00`。
 
 我們的 STLink 調適器作為 Host 端，會先送出一個讀取 DPIDR 的 8-bit 請求封包 (Request Packet)，然後等待目標IC回應，在讀DPIDR此操作上，其部會回應 WAIT 或 FAULT，而是會直接回應 OK (0b001) by LSB first。
 
@@ -128,6 +128,7 @@ Trn (Turnaround) 為雙向資料線切換方向的時間，讀取操作時，Hos
 </p>
 
 傳送回來的 DPIDR 資料為 `0x5BA02477`，其二進位為 `0101 1011 1010 0000 0010 0100 0111 0111`，符合 ARM DPIDR 的格式說明:
+
 | Bits      | Name               | Value    |Description                                 |
 |-----------|--------------------|----------|---------------------------------------------|
 | [31:28]   | Revision           | 0x5      |**修訂版本號 (Revision code)** 表示此 DP 設計的修訂版本為 r5。  |
