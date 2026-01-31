@@ -64,12 +64,87 @@ lang: zh-Hant
 <img src="{{ '/assets/26_0130/Table_5_Debug_connector_CN6.png' | relative_url }}" width="600">
 </p>
 
-## 📉 SWD 通訊觀察
+而操作上，使用 STM32CubeProgrammer ，在 GUI 介面命令 ST-LINK 進行 SWD 通訊，並且在 PulseView 上觀察 SWD 波型。
+
+<!-- ![](/assets/26_0130/Cube_programmer.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0130/Cube_programmer.png' | relative_url }}" width="700">
+</p>
 
 
+## 📈 SWD 通訊觀察
+
+透過 CubeProgrammer 連接 STM32F767ZI 後，按下 Connect 按鈕，ST-LINK 會自動透過 SWD 協定與目標 MCU 進行通訊。
+此次觀察的重點在於 SWD 協定的初始化過程，以及讀取 DPIDR (Debug Port ID Register) 的操作。
+
+<!-- ![](/assets/26_0130/Overview_waveform.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0130/Overview_waveform.png' | relative_url }}" width="800">
+</p>
+
+### JTAG 轉 SWD 序列
+
+<!-- ![](/assets/26_0130/JTAG_to_SWD_sequence_timing.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0130/JTAG_to_SWD_sequence_timing.png' | relative_url }}" width="800">
+</p>
+
+<!-- ![](/assets/26_0130/JTAG_to_SWD_sequence_waveform.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0130/JTAG_to_SWD_sequence_waveform.png' | relative_url }}" width="800">
+</p>
+
+經過NRST 重置後，由於 JTAG interface 必須在 TLR state 才能偵測 16-bit JTAG-to-SWD sequence，因此套過 Line Reset (至少 50 個 TCK 並且 TMS HIGH) 後，接著會送出 JTAG-to-SWD sequence。
+> Note: 我的疑問，為何假設此時初始狀態是在JTAG的某state下，其software reset 明明只要5個TCK就可以了?
+> 參考文件的解釋 ```The sequence that is shown in the figure has been chosen to ensure that the SWJ-DP switches to SWD, independent of whether it was previously expecting JTAG or SWD.``` ，由於此時無法確定處於的狀態，因此使用了較長的序列來確保切換成功。
+
+而 JTAG-to-SWD sequence 為 16-bit 的固定序列 `0x79E7` (大多是MSB first)，其二進位為 `0b0111 1001 1110 0111`。
+
+### SWD 讀 IDCODE (DPIDR)
+
+<!-- ![](/assets/26_0130/SWD_successful_read_operation.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0130/SWD_successful_read_operation.png' | relative_url }}" width="700">
+</p>
+
+SWD 不同於 JTAG 有 IDCODE instrunction，其走的是封包概念，所以當我們要讀取 Chip ID 時，會透過 SWD 讀取 DPIDR (Debug Port ID Register) 來取得，而其位址為 `0x00`。
+
+我們的 STLink 調適器作為 Host 端，會先送出一個讀取 DPIDR 的 8-bit 請求封包 (Request Packet)，然後等待目標IC回應，在讀DPIDR此操作上，其部會回應 WAIT 或 FAULT，而是會直接回應 OK (0b001) by LSB first。
+
+Parity bit 看傳送封包的資料位元數量來決定其值，若資料中 1 的數量為奇數，則 Parity bit 為 1 (使得總數為偶數)，反之亦然。
+Park bit 為 1，事先將資料線拉高，表示傳輸結束，且確保 Trn 期間資料線為高電位。
+Trn (Turnaround) 為雙向資料線切換方向的時間，讀取操作時，Host 端在送出請求封包後，需要釋放資料線，讓目標 IC 可以回應資料，因此會有一個 Trn 週期。
+
+<!-- ![](/assets/26_0130/SWD_read_op_DPIDR.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0130/SWD_read_op_DPIDR.png' | relative_url }}" width="800">
+</p>
+
+在上圖中，IDCODE 傳送8-bit 後，看起來少了一個 Trn cycle，尚不確定原因，懷疑 LA 取樣率不夠高導致少觀察到。
+
+<!-- ![](/assets/26_0130/DPIDR_value.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0130/DPIDR_value.png' | relative_url }}" width="800">
+</p>
+
+傳送回來的 DPIDR 資料為 `0x5BA02477`，其二進位為 `0101 1011 1010 0000 0010 0100 0111 0111`，符合 ARM DPIDR 的格式說明:
+| Bits      | Name               | Value    |Description                                 |
+|-----------|--------------------|----------|---------------------------------------------|
+| [31:28]   | Revision           | 0x5      |**修訂版本號 (Revision code)** 表示此 DP 設計的修訂版本為 r5。  |
+| [27:20]   | Part Number        | 0xBA     |**零件編號 (Part Number)** 由設計者 (Designer) 分配的編號。`0xBA` 通常對應 Arm CoreSight SoC-400 系列的 SW-DP。 |
+| [19:17]   | Reserved           | 0x0      |保留位，應設為零。                           |
+| [16]      | Min                | 0x0      |**最小化實作 (Minimal DP)** `0`表示此 DP **不是** MINDP。 |
+| [15:12]   | Version            | 0x2      |**DP 架構版本 (DP Version)** `0x2` 表示此 DP 符合 **DPv2** 規範。|
+| [11:1]    | Designer ID        | 0x23B    |**設計者代碼 (Designer ID)** 這是 JEDEC JEP106 代碼，代表 **Arm Limited**。|
+| [0]       | RAO                | 0x1      |**Read As One** 此位元永遠為 1。               |
+
+在資料後面，同樣在下個操作前，會有一個 Parity bit 和 Trn 週期。
 
 ## 📝 結語
 
+由於 ARM 架構的細節相當多，因此在了解 SWD 協定時，必須同時補充相關的背景知識。
+在使用新買的邏輯分析儀並操作 PulseView ，發現其操作介面相當直觀，且支援多種協定解碼器 (Protocol Decoder)，對於我後續學習與工作上debug 相關會有很大幫助。
+原本想學習到至少讀出 IC UID ，不過後續發現還需要對 Access Port (AP) 操作等等，暫時先擱置，未來有機會再繼續深入研究。
 
 
 ## 📚 Reference
