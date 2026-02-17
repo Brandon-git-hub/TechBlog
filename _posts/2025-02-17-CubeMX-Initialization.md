@@ -116,7 +116,7 @@ lang: zh-Hant
 **GPIO Speed 設定**
 應上述對於高頻翻轉的需求，我們將 PA3 的 **Maximum output speed** 調升至 **Medium**。
 
-![](/assets/26_0217/PA3_GPIO_Speed.png)
+<!-- ![](/assets/26_0217/PA3_GPIO_Speed.png) -->
 <p align="center">
 <img src="{{ '/assets/26_0217/PA3_GPIO_Speed.png' | relative_url }}" width="500">
 </p>
