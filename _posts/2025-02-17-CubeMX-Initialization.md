@@ -498,6 +498,11 @@ $$V_{input} = \frac{ADC_{val} * V_{reference}}{ADC_{max}} = \frac{ADC_{val} * 3.
 * **Start Bit**：TX 由高電位變為低電位（LO）代表資料開始。
 * **Data Bits**：以 Byte 為基本單位，每 8 bits 為一組進行傳送。
 
+## 📝 八、 結語
+
+由於這是第一次嘗試使用 CubeMX，完全從零開始建立與實作 STM32 專案，其中許多細節和踩過的坑，我會想要記錄下來供未來自己參考，因此通篇下來顯得瑣碎，還請見諒。
+
 ## 📚 Reference
 * [UM1974 - STM32 Nucleo-144 boards (MB1137)](https://www.st.com/resource/en/user_manual/um1974-stm32-nucleo144-boards-mb1137-stmicroelectronics.pdf)
 * [DS11532 - STM32F765xx STM32F767xx STM32F768Ax STM32F769xx](https://www.st.com/resource/en/datasheet/stm32f765bi.pdf)
+* [Hex to String | Hex to ASCII Converter](https://www.rapidtables.com/convert/number/hex-to-ascii.html)
