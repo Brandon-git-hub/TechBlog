@@ -7,20 +7,20 @@ date: 2026-02-17
 lang: zh-Hant
 ---
 
-## 📌 前言
+## 📌 一、 前言
 
 由於 STM32 支援的外設（Peripherals）種類繁多，且不同型號間的硬體配置也存在差異，有一定的開發門檻。雖然意法半導體 (STMicroelectronics) 提供了 **HAL 庫**，讓開發者能以高階（High Level） API 開發應用功能，但對初學者而言，初期手動建立專案與配置暫存器仍具挑戰性。
 
 透過 **STM32CubeMX**，我們可以直接在圖形化介面（GUI）中完成引腳與時鐘配置，並自動生成初始化程式碼。這不僅是目前官方推薦的開發方式，也是新手入門最直覺、方便的首選。
 
-## 🔧 實驗環境與工具
+## 🔧 二、 實驗環境與工具
 
 * 開發板: STM32 NUCLEO-F767ZI Board
 * 核心 MCU: STM32F767ZI (STM32F7 系列)
 * 開發工具：STM32CubeMX
 * 輔助工具: 24Mhz 8CH 邏輯分析儀（用於驗證 GPIO 和輸出的通訊訊號）
 
-## 🚀 CubeMX 專案啟動配置步驟
+## 🚀 三、 CubeMX 專案啟動配置步驟
 
 ### 1. 選擇開發平台
 
@@ -50,7 +50,7 @@ lang: zh-Hant
 <img src="{{ '/assets/26_0217/STM32F767ZITx_NUCLEO_F767ZI_Project.png' | relative_url }}" width="800">
 </p>
 
-## 🛠️ 外設選擇與設定 (Pinout & Configuration)
+## 🛠️ 四、 外設選擇與設定 (Pinout & Configuration)
 
 在下面範例中，我們將配置 GPIO、ADC1、TIM2 & TIM3、USART3 等外設。
 
@@ -111,7 +111,15 @@ lang: zh-Hant
 
 * **訊號觸發 (Trigger)**：當程式進入特定中斷或 Function 時，將 PA3 拉高，作為邏輯分析儀的觸發訊號。
 * **頻率量測**：透過在迴圈中翻轉（Toggle）此腳位，測量程式執行的實際循環頻率或者是使用 TIM 延遲的時間符不符合預期。
+* **軟體模擬 (Bit-banging)**：透過軟體快速切換IO輸出電位，模擬簡單的通訊協定或時鐘訊號。
 
+**GPIO Speed 設定**
+應上述對於高頻翻轉的需求，我們將 PA3 的 **Maximum output speed** 調升至 **Medium**。
+
+![](/assets/26_0217/PA3_GPIO_Speed.png)
+<p align="center">
+<img src="{{ '/assets/26_0217/PA3_GPIO_Speed.png' | relative_url }}" width="500">
+</p>
 
 ### 3. ADC 單通道設定 (PA0)
 
@@ -255,7 +263,7 @@ lang: zh-Hant
 **實測結果分享：**
 根據實際觀測，**HSE** 輸出確實為 **8MHz**，而內部震盪源 **HSI** 則為 **16MHz**。
 
-## 🕒 Clock Configuration (時鐘樹配置)
+## 🕒 五、 Clock Configuration (時鐘樹配置)
 
 完成外設設定後，我們進入時鐘樹頁面進行最後調整。由於 STM32F767ZI 的效能強大，我們目標是將系統時鐘（HCLK）推到最高頻率：
 
@@ -268,7 +276,7 @@ lang: zh-Hant
 <img src="{{ '/assets/26_0217/Clock_Configuration.png' | relative_url }}" width="800">
 </p>
 
-## 📂 Project Manager (專案管理設定)
+## 📂 六、 Project Manager (專案管理設定)
 
 對於 Project Manager，這裡的設定由個人需求，下面的範例僅供演示。
 實際到這裡設定完成，就可以按下右上角的 GENERATE CODE 按鈕了!
@@ -308,6 +316,8 @@ lang: zh-Hant
 設定完成後，點擊右上角的 **「GENERATE CODE」** 按鈕，系統就會自動生成專案框架。
 
 > **💡 溫馨提示**：記得將設定存成 `.ioc` 檔。日後若需要新增外設（例如增加更多的 ADC 通道），只要再次開啟該檔案修改並重新產生 Code 即可，這就是使用 CubeMX 開發的最大優勢。
+
+## 🧑‍💻 七、 範例程式以及量測驗證
 
 
 ## 📚 Reference
