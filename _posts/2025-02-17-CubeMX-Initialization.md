@@ -20,9 +20,9 @@ lang: zh-Hant
 * 開發工具：STM32CubeMX
 * 輔助工具: 24Mhz 8CH 邏輯分析儀（用於驗證 GPIO 和輸出的通訊訊號）
 
-## 🚀 CubeMX 專案配置步驟
+## 🚀 CubeMX 專案啟動配置步驟
 
-1. 選擇開發平台
+### 1. 選擇開發平台
 
 在啟動畫面中，我們選擇 **「Access to Board Selector」**（或 *Start My project from ST Board*）。對於使用官方開發板的使用者來說，這能自動幫我們定義好板載的 LED、按鈕與調試接口（ST-Link）。
 
@@ -31,7 +31,7 @@ lang: zh-Hant
 <img src="{{ '/assets/26_0217/Board_selector.png' | relative_url }}" width="500">
 </p>
 
-2. 搜尋與確認型號
+### 2. 搜尋與確認型號
 
 在跳出的搜尋介面中，選擇 ```NUCLEO-F767ZI```。選定後點擊右上角的 **Start Project**。
 
@@ -40,7 +40,7 @@ lang: zh-Hant
 <img src="{{ '/assets/26_0217/New_Project_from_a_Board_UI.png' | relative_url }}" width="800">
 </p>
 
-3. 初始化外設設定
+### 3. 初始化外設設定
 
 系統會詢問是否要「Initialize all peripherals with their default Mode?」，點選 Yes。
 進入主畫面後，我們就可以開始進行 **Pinout & Configuration**（引腳配置）與 **Clock Configuration**（時鐘樹設定）了！
@@ -61,7 +61,7 @@ lang: zh-Hant
 
 ### 1. LED 燈與 GPIO 配置
 
-查看 UM1974 User manual 的第 7.5 節，確認板載 LED (LD1, LD2, LD3) 所連接的 Pin 腳。
+查看 [UM1974 User Manual](https://www.st.com/resource/en/user_manual/um1974-stm32-nucleo144-boards-mb1137-stmicroelectronics.pdf) 的第 7.5 節，確認板載 LED (LD1, LD2, LD3) 所連接的 Pin 腳。
 
 <!-- ![](/assets/26_0217/UM1974_LEDs.png) -->
 <p align="center">
@@ -94,8 +94,6 @@ lang: zh-Hant
 <img src="{{ '/assets/26_0217/PB14_LD3_RED.png' | relative_url }}" width="450">
 </p>
 
-並且按右鍵可以 Enter User Label，最終生成 code 會以此取名 Port & Pin。
-
 #### 💡 使用 User Label 的好處
 
 在引腳上點擊右鍵選擇 **"Enter User Label"**，可以為該引腳命名（如 `LD1_GREEN`）。這樣在自動生成的程式碼中，HAL 庫會自動產生的宏（Macro）定義 Port & Pin，這能大幅提高程式碼的可讀性。
@@ -123,7 +121,7 @@ lang: zh-Hant
 
 <!-- ![](/assets/26_0217/ADC1_Mode_and_Configuration.png) -->
 <p align="center">
-<img src="{{ '/assets/26_0217/ADC1_Mode_and_Configuration.png' | relative_url }}" width="400">
+<img src="{{ '/assets/26_0217/ADC1_Mode_and_Configuration.png' | relative_url }}" width="500">
 </p>
 
 <!-- ![](/assets/26_0217/PA0_ADC1_IN0.png) -->
@@ -140,10 +138,10 @@ lang: zh-Hant
 
 ### 4. TIM 定時器配置與延時邏輯
 
-在本專案中，我計畫將 **TIM2** 作為 `ms` 級延時計數器，**TIM3** 作為 `us` 級延時計數器。
+在本專案中，我計畫將 **TIM2** 作為 `ms` 級延時計數器，**TIM3** 作為 `us` 級延時計數器。 
 在配置時，請務必將 **Clock Source** 設定為 **Internal Clock**；其餘通道（Channels）由於本次不需輸出訊號，保持 **Disable** 即可。
 
-<!-- ![](/assets/26_0217/TIM2_Mode.png) -->
+<!-- ![](/assets/26_0217/TIM2_Mode.png)-->
 <p align="center">
 <img src="{{ '/assets/26_0217/TIM2_Mode.png' | relative_url }}" width="800">
 </p>
@@ -156,9 +154,14 @@ lang: zh-Hant
 * **TIM3**：屬於 **16-bit** 定時器。
 因此，選擇位元數較高的 TIM2 作為 `ms` 延時計數器最為合適。
 
+<!-- ![](/assets/26_0217/F767ZI_Block_Diagram.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0217/F767ZI_Block_Diagram.png' | relative_url }}" width="600">
+</p>
+
 #### 頻率與預分頻器 (PSC) 計算
 
-根據後續的 **Clock Configuration** 設定，雖然 APB1 匯流排頻率最高為 54MHz，但由於時鐘樹架構，定時器的時鐘輸入（Timer Clock）會經過倍頻，實際運行為 **108 MHz**。
+根據 Datasheet **Figure 2 (Block Diagram)** 和後續的 **Clock Configuration** 設定，得知雖然 APB1 匯流排頻率最高為 54MHz，但由於時鐘樹架構，定時器的時鐘輸入（Timer Clock）會經過倍頻，實際運行為 **108 MHz**。
 
 為了達到精確計數，我們透過預分頻器（Prescaler, PSC）來調整計數頻率（減 1 是因為從 0 開始）：
 
