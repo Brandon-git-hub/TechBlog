@@ -505,4 +505,4 @@ $$V_{input} = \frac{ADC_{val} * V_{reference}}{ADC_{max}} = \frac{ADC_{val} * 3.
 ## 📚 Reference
 * [UM1974 - STM32 Nucleo-144 boards (MB1137)](https://www.st.com/resource/en/user_manual/um1974-stm32-nucleo144-boards-mb1137-stmicroelectronics.pdf)
 * [DS11532 - STM32F765xx STM32F767xx STM32F768Ax STM32F769xx](https://www.st.com/resource/en/datasheet/stm32f765bi.pdf)
-* [Hex to String | Hex to ASCII Converter](https://www.rapidtables.com/convert/number/hex-to-ascii.html)
+* [Hex to ASCII Converter](https://www.rapidtables.com/convert/number/hex-to-ascii.html)
