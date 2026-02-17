@@ -319,6 +319,184 @@ lang: zh-Hant
 
 ## 🧑‍💻 七、 範例程式以及量測驗證
 
+### 1. LED 燈閃爍與定時器延時實作
+
+以下提供核心邏輯代碼。請注意，STM32CubeMX 僅負責生成定時器的初始化配置，**必須手動呼叫 `HAL_TIM_Base_Start()**` 才能正式啟動計數器。
+
+```c
+// TIM_MS   TIM2    32bit timer for MS delay	
+#define TM_MS_GET()	    	__HAL_TIM_GET_COUNTER(&htim2)
+// TIM_US   TIM3    16bit timer for US delay
+#define TM_US_GET()	    	__HAL_TIM_GET_COUNTER(&htim3)
+
+void TM_Delay_MS(__IO U16 ms)
+{	
+    U32 dly = 100 * ms;
+    U32 start = TM_MS_GET();
+    while((U32)(TM_MS_GET() - start) < dly) {
+        __asm("NOP"); 
+    }
+}
+
+void TM_Delay_US(__IO U16 us)
+{
+    U16 start = TM_US_GET();
+    while ((U16)(TM_US_GET() - start) < us) {
+        __asm("NOP"); 
+    }
+}
+
+void TM_Init(void) 
+{
+    HAL_TIM_Base_Start(&htim2);
+    HAL_TIM_Base_Start(&htim3);
+}
+
+void led_green_toggle(void) {
+    HAL_GPIO_TogglePin(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin);  // PB0
+}
+
+void led_blue_toggle(void) {
+    HAL_GPIO_TogglePin(LD2_BLUE_GPIO_Port, LD2_BLUE_Pin);  // PB7
+}
+
+void led_red_toggle(void) {
+    HAL_GPIO_TogglePin(LD3_RED_GPIO_Port, LD3_RED_Pin);  // PB14
+}
+
+int main(void)
+{
+    // Start TIM2,3
+    TM_Init(); 
+    while (1)
+    {
+        U16 delay_ms = 50;
+        led_green_toggle();
+        TM_Delay_MS(delay_ms);
+        led_blue_toggle();
+        TM_Delay_MS(delay_ms);
+        led_red_toggle();
+        TM_Delay_MS(delay_ms);
+    }
+}
+```
+
+#### 🔍 波形驗證
+透過邏輯分析儀觀察 `led_toggle` 的波形，可以確認三個 LED 翻轉的時間間隔是否精確為 50ms。這也是驗證前面 **Clock Configuration** 設定是否正確最直觀的方法。
+
+<!-- ![](/assets/26_0217/LED_Toggle_Waveform.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0217/LED_Toggle_Waveform.png' | relative_url }}" width="800">
+</p>
+
+### 2. ADC 量測電壓與 UART 資料傳輸
+
+在本實作中，我們將讀取 **PA0** 的類比電壓，並透過 **UART3** 將結果輸出。同時，利用 **PA3** 腳位的電位變化，方便透過邏輯分析儀觀察 UART 的傳輸行為。
+
+> **⚠️ 注意**：本範例採用最基礎的 **ADC Polling** 與 **UART Blocking** 模式。在實際專案中，這種方式會導致 CPU 進入等待狀態而造成效能低落。建議一般可使用 **Interrupt** 模式，甚至大量資料傳輸時使用 **DMA** 模式，解放 CPU。
+
+```c
+U8 Polling_ADC_Measurement(float *voltage, U8 timeout) {
+    if (voltage == NULL) return HAL_ERROR; // avoid null reference
+    U8 ret;
+    ret = HAL_ADC_Start(&hadc1);
+    if (ret != HAL_OK) {return ret;}
+
+    // timeout (ms)
+    ret = HAL_ADC_PollForConversion(&hadc1, timeout);
+    if (ret == HAL_OK) {
+        U32 adc_val = HAL_ADC_GetValue(&hadc1);
+        // Vref = 3.3V, Resolution = 12B
+        *voltage = ((float)adc_val * 3.3f) / 4095.0f;
+    }
+    HAL_ADC_Stop(&hadc1);
+    return ret;
+}
+
+U8 Blocking_UART_Transmit(U8 timeout, const char * format, ... ) {
+    U8 ret;
+    char msg[64];
+    va_list marker;
+
+	va_start(marker, format);
+    U16 len = vsnprintf(msg, sizeof(msg), format, marker);
+	va_end(marker);
+    
+    if (len > 0) {
+        // (sizeof(msg) - 1) avoid overflow, the last always '\0'
+        U16 send_len = (len < sizeof(msg)) ? len : (U16)(sizeof(msg) - 1);
+        ret = HAL_UART_Transmit(&huart3, (PU8)msg, send_len, timeout);
+    } else {
+        ret = HAL_ERROR;
+    }
+    return ret;
+}
+
+void pa3_hi(void) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+}
+
+void pa3_lo(void) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+}
+
+int main(void)
+{
+    TM_Init(); 
+    while (1)
+    {
+        float curr_voltage = 0;
+        if (Polling_ADC_Measurement(&curr_voltage, 10) == HAL_OK) {
+        pa3_hi();
+        Blocking_UART_Transmit(100, "Voltage: %.2fV\n", curr_voltage);
+        }
+        pa3_lo();
+        TM_Delay_MS(10);
+    }
+}
+```
+
+#### 📐 ADC 數值換算邏輯
+
+由於 ADC 回傳的是數位量化值，我們需要透過參考電壓比例換算回實際電壓：
+
+$$\frac{V_{input}}{V_{reference}} = \frac{ADC_{val}}{ADC_{max}}$$
+
+已知前面 ADC 設定時解析度為 **12 bits**，且參考電壓是工作電壓 3.3V，因此換算公式如下：
+
+$$V_{input} = \frac{ADC_{val} * V_{reference}}{ADC_{max}} = \frac{ADC_{val} * 3.3}{2^{12} -1} = \frac{ADC_{val} * 3.3}{4095}$$
+
+#### 🔍 波形驗證
+
+**1. 整體週期觀察**
+從 Overview 波形可以看到，大約每 **10ms** PA3 會拉高一次，隨即 TX 引腳開始輸出資料。這驗證了我們主迴圈的延時邏輯：先執行 ADC 採樣，隨後立即進行 UART 傳送。
+
+<!-- ![](/assets/26_0217/ADC_UART_Waveform.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0217/ADC_UART_Waveform.png' | relative_url }}" width="800">
+</p>
+
+**2. 資料內容驗證**
+解碼 TX 訊號後的 String 結果顯示為 `"Voltage: 3.29V\n"`。這是因為我們將 3.3V 短路接到 PA0 供 ADC 量測。
+
+<!-- ![](/assets/26_0217/hex_to_ascii.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0217/hex_to_ascii.png' | relative_url }}" width="600">
+</p>
+
+**3. UART 時序分析 (Baud Rate 驗證)**
+放大觀察單個 Bit 的持續時間約為 **8.6~8.7 us**。
+這與我們在 CubeMX 中設定的 BaudRate **115200** 極為接近，誤差在容許範圍內。
+
+<!-- ![](/assets/26_0217/UART_Timing.png) -->
+<p align="center">
+<img src="{{ '/assets/26_0217/UART_Timing.png' | relative_url }}" width="800">
+</p>
+
+此外，從波形可觀察到標準的 UART 協定：
+
+* **Start Bit**：TX 由高電位變為低電位（LO）代表資料開始。
+* **Data Bits**：以 Byte 為基本單位，每 8 bits 為一組進行傳送。
 
 ## 📚 Reference
 * [UM1974 - STM32 Nucleo-144 boards (MB1137)](https://www.st.com/resource/en/user_manual/um1974-stm32-nucleo144-boards-mb1137-stmicroelectronics.pdf)
