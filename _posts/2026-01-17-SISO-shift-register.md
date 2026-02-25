@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Shift Register (HDLBits)"
+title: "SISO Shift Register (HDLBits)"
 subtitle: "SISO Shift Registers with Synchronous Active-Low Reset"
 categories: [Verilog]
 date: 2026-01-17
