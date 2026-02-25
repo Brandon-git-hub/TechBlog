@@ -167,13 +167,13 @@ module tb_top_module;
 endmodule
 ```
 
-## 🔬 Results
+## 🔬 實驗結果
 
 ### Simulation Waveform
 
 * Test Case 1: Load (L=1)
 
-當 L=1, E=0, w=0 時，執行 Load data，而此時 SW 送入的是 ```4'b1011```，因此可以看到 ```LEDR = 4'b1011```.
+    當 L=1, E=0, w=0 時，執行 Load data，而此時 SW 送入的是 ```4'b1011```，因此可以看到 ```LEDR = 4'b1011```.
 
 <!-- ![](/assets/26_0222/Simulation_test_case1.png) -->
 <p align="center">
@@ -182,7 +182,7 @@ endmodule
 
 * Test Case 2: Hold (L=0, E=0)
 
-當 L=0, E=0, w=0 時，執行 Hold，
+    當 L=0, E=0, w=0 時，執行 Hold，所以可以看到 ```LEDR``` 仍是 ```4'b1011```.
 
 <!-- ![](/assets/26_0222/Simulation_test_case2.png) -->
 <p align="center">
@@ -191,7 +191,7 @@ endmodule
 
 * Test Case 3: Shift Right with w=0 (E=1)
 
-當 L=0, E=1, w=0 時，將現有值向右傳且不會 Rotate，LSB 直接向右直接捨棄。
+    當 L=0, E=1, w=0 時，將現有值向右傳且不會 Rotate，LSB 直接向右直接捨棄。
 
 <!-- ![](/assets/26_0222/Simulation_test_case3.png) -->
 <p align="center">
@@ -200,7 +200,7 @@ endmodule
 
 * Test Case 4: Shift Right with w=1
 
-當 L=0, E=1, w=1 時，將現有值向右傳且 MSB 傳入 w=1。
+    當 L=0, E=1, w=1 時，將現有值向右傳且 MSB 傳入 w=1。
 
 <!-- ![](/assets/26_0222/Simulation_test_case4.png) -->
 <p align="center">
