@@ -9,7 +9,7 @@ lang: zh-Hant
 
 ## 📌 Paul Falstad Simulator 簡介
 
-**Falstad** 是一款開源的電路模擬工具，基於 Java 開發（現已有完善的網頁 JavaScript 版本），使用者可直接透過瀏覽器免費操作。
+**Falstad** 是一款開源的電路模擬工具，基於 Java 開發（現已有完善的網頁 JavaScript 版本 [Paul Falstad](https://www.falstad.com/circuit/circuitjs.html)），使用者可直接透過瀏覽器免費操作。
 其核心優勢在於**操作直覺**且具備**即時動態回饋**，使用者可以快速佈置元件並組合電路，極適合用於初步概念驗證（Proof of Concept）與教學演示。
 
 ### 主要特色：
@@ -26,7 +26,8 @@ lang: zh-Hant
 </p>
 
 ## 📚 Reference
-* [Paul Falstad](https://www.falstad.com/circuit/circuitjs.html)
-* [Reddit - Info on who Paul Falstad is?](https://www.reddit.com/r/AskElectronics/comments/1jvw8zo/info_on_who_paul_falstad_is_needed_for_scientific/)
+* [CircuitJS1 Official Site](https://www.falstad.com/circuit/circuitjs.html)
+* [CircuitJS1 Documentation](https://www.falstad.com/circuit/doc/)
 * [pfalstad/circuitjs1](https://github.com/pfalstad/circuitjs1)
+* [Reddit - Info on who Paul Falstad is?](https://www.reddit.com/r/AskElectronics/comments/1jvw8zo/info_on_who_paul_falstad_is_needed_for_scientific/)
 * [下載LTspice](https://www.analog.com/cn/lp/002/tools/ltspice-simulator-tw.html)
