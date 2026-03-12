@@ -226,6 +226,8 @@ quartus_pgm.exe -m jtag -c "USB-Blaster" -o "p;$SOF_FILE"
 
 ## 🧑‍💻 實作範例：跑馬燈
 
+我將此次實作範例放在 Github 上，網址 [Brandon-git-hub/Q-CLI - Scrolling LED](https://github.com/Brandon-git-hub/Q-CLI/tree/0a9e1f1489240af274c67d67b590a06f3c381f5b)。
+
 我使用的是 **Terasic DE0-Nano**。推薦使用官方提供的 [DE0-Nano System Builder](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=Taiwan&CategoryNo=173&No=603&PartNo=4#contents) 來快速生成 `.qsf` 約束文件，省去手動分配 Pin 腳的麻煩。
 
 <!-- ![](../assets/26_0301/DE0_NANO_System_Builder.png) -->
@@ -402,3 +404,4 @@ endmodule
 * [Quartus Prime Pro Edition User Guide Scripting](https://docs.altera.com/r/docs/683432/25.3.1/quartus-prime-pro-edition-user-guide-scripting/answers-to-top-faqs)
 * [Altera DE0-Nano 開發平台](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=Taiwan&CategoryNo=145&No=603)
 * [Altera DE0-Nano 開發平台 - 設計資源](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=Taiwan&CategoryNo=173&No=603&PartNo=4#contents)
+* [Brandon-git-hub/Q-CLI - Scrolling LED](https://github.com/Brandon-git-hub/Q-CLI/tree/0a9e1f1489240af274c67d67b590a06f3c381f5b)
