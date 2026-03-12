@@ -160,21 +160,6 @@ quartus_pgm.exe -m jtag -c "USB-Blaster" -o "p;$SOF_FILE"
             "detail": "Clean, compile RTL and Testbench, and run the simulation in the Open_EDA env."
         },
         {
-            "label": "📈 View Waveform (make wave)",
-            "type": "shell",
-            "command": "conda run -n Open_EDA make wave",
-            "group": "none",
-            "presentation": {
-                "close": true, 
-                "showReuseMessage": false 
-            },
-            "options": {
-                "cwd": "${workspaceFolder}/sim"
-            },
-            "problemMatcher": [],
-            "detail": "Open GTKWave to view the simulation results in the Open_EDA env."
-        },
-        {
             "label": "💡 Synthesize (make synth)",
             "type": "shell",
             "command": "conda run -n Open_EDA make synth",
@@ -188,36 +173,6 @@ quartus_pgm.exe -m jtag -c "USB-Blaster" -o "p;$SOF_FILE"
             },
             "problemMatcher": [],
             "detail": "Run Yosys synthesis and generate schematics in the Open_EDA env."
-        },
-        {
-            "label": "🧹 Clean (make clean)",
-            "type": "shell",
-            "command": "conda run -n Open_EDA make clean",
-            "group": "none",
-            "presentation": {
-                "close": true, 
-                "showReuseMessage": false 
-            },
-            "options": {
-                "cwd": "${workspaceFolder}/sim"
-            },
-            "problemMatcher": [],
-            "detail": "Remove all generated files in the Open_EDA env."
-        },
-        {
-            "label": "🔎 Run Gemini CLI",
-            "type": "shell",
-            "command": "conda run --no-capture-output -n Open_EDA gemini",
-            "group": "none",
-            "presentation": {
-                "reveal": "always",
-                "panel": "new",
-                "focus": true, 
-                "echo": true,
-                "close": false
-            },
-            "problemMatcher": [],
-            "detail": "Launch the Gemini CLI in a new interactive terminal."
         }
     ]
 }
@@ -379,7 +334,7 @@ endmodule
 <!-- ![](../assets/26_0301/schematic_rtl.svg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0301/schematic_rtl.svg' | relative_url }}" width="350">
+<img src="{{ '/assets/26_0301/schematic_rtl.svg' | relative_url }}" width="600">
 </p>
 
 ### Gate-level Schematic
@@ -387,7 +342,7 @@ endmodule
 <!-- ![](../assets/26_0301/schematic_gate.svg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0301/schematic_gate.svg' | relative_url }}" width="350">
+<img src="{{ '/assets/26_0301/schematic_gate.svg' | relative_url }}" width="600">
 </p>
 
 ## 🔬 實測結果
@@ -397,7 +352,7 @@ endmodule
 <!-- ![](../assets/26_0301/Run_example.jpg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0301/Run_example.jpg' | relative_url }}" width="800">
+<img src="{{ '/assets/26_0301/Run_example.jpg' | relative_url }}" width="600">
 </p>
 
 ## 📚 Reference
