@@ -16,6 +16,7 @@ The "game" is played on a two-dimensional grid of cells, where each cell is eith
 * 2 neighbours: Cell state does not change.
 * 3 neighbours: Cell becomes 1.
 * 4+ neighbours: Cell becomes 0.
+
 The game is formulated for an infinite grid. In this circuit, we will use a 16x16 grid. To make things more interesting, we will use a 16x16 toroid, where the sides wrap around to the other side of the grid. For example, the corner cell (0,0) has 8 neighbours: (15,1), (15,0), (15,15), (0,1), (0,15), (1,1), (1,0), and (1,15). The 16x16 grid is represented by a length 256 vector, where each row of 16 cells is represented by a sub-vector: q[15:0] is row 0, q[31:16] is row 1, etc. (This tool accepts SystemVerilog, so you may use 2D vectors if you wish.)
 
 * load: Loads data into q at the next clock edge, for loading initial state.
@@ -32,7 +33,7 @@ A test case that's easily understandable and tests some boundary conditions is t
 
 ### Explanation by GEMINI
 
-![](/assets/26_0405/Gemini_Generated_Image_tqml9itqml9itqml.png)
+<!-- ![](/assets/26_0405/Gemini_Generated_Image_tqml9itqml9itqml.png) -->
 
 <p align="center">
 <img src="{{ '/assets/26_0405/Gemini_Generated_Image_tqml9itqml9itqml.png' | relative_url }}" width="700">
@@ -174,7 +175,7 @@ endmodule
 
 ### Simulation Waveform
 
-![](/assets/26_0405/My_simulation.png)
+<!-- ![](/assets/26_0405/My_simulation.png) -->
 
 <p align="center">
 <img src="{{ '/assets/26_0405/My_simulation.png' | relative_url }}" width="700">
@@ -182,19 +183,19 @@ endmodule
 
 The initial pattern is like the middle one in the below image.
 
-![](/assets/26_0405/Glider_pattern.png)
+<!-- ![](/assets/26_0405/Glider_pattern.png) -->
 
 <p align="center">
 <img src="{{ '/assets/26_0405/Glider_pattern.png' | relative_url }}" width="500">
 </p>
 
-![](/assets/26_0405/Sim1.png)
+<!-- ![](/assets/26_0405/Sim1.png) -->
 
 <p align="center">
 <img src="{{ '/assets/26_0405/Sim1.png' | relative_url }}" width="700">
 </p>
 
-![](/assets/26_0405/Sim2.png)
+<!-- ![](/assets/26_0405/Sim2.png) -->
 
 <p align="center">
 <img src="{{ '/assets/26_0405/Sim2.png' | relative_url }}" width="700">
