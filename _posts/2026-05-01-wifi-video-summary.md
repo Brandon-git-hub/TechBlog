@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "通訊原理基礎科普"
+title: "Wi-Fi 通訊原理：從電磁感應到調變、OFDM 與 MIMO 技術"
 subtitle: "分享影片【硬核科普】WiFi是怎麼傳遞資訊的？ 把資訊裝進電磁波有多難？ --- 硬體茶談"
 categories: [Wifi, Wireless Communication]
 date: 2026-05-01
@@ -27,7 +27,7 @@ lang: zh-Hant
 
 ## 📔 如何把資訊裝進電磁波?
 
-### 調變（Modulation）
+### 基礎調變技術（Modulation）
 
 電磁波有三個基本的特性：振幅、頻率和相位。這些特性可以用來調變訊號，將資訊編碼進電磁波中。
 
