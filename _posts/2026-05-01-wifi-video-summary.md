@@ -37,10 +37,10 @@ lang: zh-Hant
 
 而所謂的ASK、FSK、PSK，就是分別對應振幅調變、頻率調變和相位調變的技術。
 
-![](/assets/26_0501/ASK_FSK_PSK.jpg)
+<!-- ![](/assets/26_0501/ASK_FSK_PSK.jpg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0501/ASK_FSK_PSK.jpg' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0501/ASK_FSK_PSK.jpg' | relative_url }}" width="700">
 </p>
 
 ### QAM（Quadrature Amplitude Modulation）
@@ -53,19 +53,19 @@ lang: zh-Hant
 
 以16-QAM（Quadrature Amplitude Modulation）為例，使用16個不同的相位和振幅組合，利用了12種相位、3種振幅，可以同時傳輸4個bit的資訊，這樣就大大提高了頻譜效率。
 
-![](/assets/26_0501/QAM_Constellation_Diagram.jpg)
+<!-- ![](/assets/26_0501/QAM_Constellation_Diagram.jpg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0501/QAM_Constellation_Diagram.jpg' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0501/QAM_Constellation_Diagram.jpg' | relative_url }}" width="700">
 </p>
 
 QAM 建構了現代高速無線通訊的基礎，從WiFi到4G、5G都在使用這種調變技術來實現高速數據傳輸。
 Wifi 4 使用了64-QAM，Wifi 5 使用了256-QAM，而Wifi 6 則使用了1024-QAM，到最新的Wifi 7，則使用了4096-QAM。
 
-![](/assets/26_0501/High_speed_wireless.jpg)
+<!-- ![](/assets/26_0501/High_speed_wireless.jpg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0501/High_speed_wireless.jpg' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0501/High_speed_wireless.jpg' | relative_url }}" width="700">
 </p>
 
 傳送的波形，我們也稱之為符號（Symbol），而當我們將符號一個個序列發送出去，由於多路徑效應（Multipath Effect），會導致符號之間的干擾，這就是所謂的ISI（Inter-Symbol Interference）。因此每個符號間會有保護間隔，稱為循環前綴（Cyclic Prefix），其必須大於多路徑反射的最大時間差，以減少ISI的影響，但這也意味著限制傳輸速率上的受限。
@@ -76,26 +76,26 @@ Wifi 4 使用了64-QAM，Wifi 5 使用了256-QAM，而Wifi 6 則使用了1024-QA
 
 每個頻率的波形我們稱為子載波，由於其每個在頻譜空間會占用一小段連續的範圍，因此若要其彼此互不干擾，最簡單的方式是中間加保護間隔，但頻譜資源是有限的，分配給Wifi的資源，2.4GHz Wifi 只有80MHz，5GHz Wifi 從 5.15GHz 到 5.850GHz，這樣的頻譜資源是非常有限的，因此我們需要更有效率的方式來分配子載波。
 
-![](/assets/26_0501/electromagnetic_spectrum.jpg)
+<!-- ![](/assets/26_0501/electromagnetic_spectrum.jpg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0501/electromagnetic_spectrum.jpg' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0501/electromagnetic_spectrum.jpg' | relative_url }}" width="700">
 </p>
 
 當我們將子載波的頻率間隔，等於符號週期的倒數，這樣就會產生正交（Orthogonal）的關係，子載波之間的頻譜重疊，每個子載波在自己的中心頻率上信號強度最高，子載波的頻譜在其他子載波的頻率上剛好為零，因此不會互相干擾，這就是OFDM（Orthogonal Frequency Division Multiplexing）的原理。
 
-![](/assets/26_0501/OFDM.jpg)
+<!-- ![](/assets/26_0501/OFDM.jpg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0501/OFDM.jpg' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0501/OFDM.jpg' | relative_url }}" width="700">
 </p>
 
 ### MIMO（Multiple Input Multiple Output）
 
-![](/assets/26_0501/MIMO.jpg)
+<!-- ![](/assets/26_0501/MIMO.jpg) -->
 
 <p align="center">
-<img src="{{ '/assets/26_0501/MIMO.jpg' | relative_url }}" width="500">
+<img src="{{ '/assets/26_0501/MIMO.jpg' | relative_url }}" width="700">
 </p>
 
 為了進一步提高傳輸效率，我們可以使用多天線技術，透過多個發射天線和多個接收天線，利用空間分集（Spatial Diversity）和空間復用（Spatial Multiplexing）的原理，在同一頻率上同時傳輸多條獨立的數據流，這就是MIMO（Multiple Input Multiple Output）的原理。
