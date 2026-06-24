@@ -7,9 +7,9 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
 
     {% if page.subtitle %}
-      <p class="post-subtitle">
-        {{ page.subtitle }}
-      </p>
+    <p class="post-subtitle">
+      {{ page.subtitle }}
+    </p>
     {% endif %}
 
     <p class="post-meta">
@@ -21,13 +21,14 @@ layout: default
       {% endif %}
 
       {% if page.categories and page.categories.size > 0 %}
-        <span class="dot">•</span>
-        <span class="cats">
-          Category: 
-          {% for category in page.categories %}
-            <a href="{{ site.baseurl }}/categories/#{{ category | slugify }}">{{ category }}</a>{% unless forloop.last %}, {% endunless %}
-          {% endfor %}
-        </span>
+      <span class="dot">•</span>
+      <span class="cats">
+        Category:
+        {% for category in page.categories %}
+        <a href="{{ site.baseurl }}/categories/#{{ category | slugify }}">{{ category }}</a>{% unless forloop.last %},
+        {% endunless %}
+        {% endfor %}
+      </span>
       {% endif %}
 
       <span class="dot">•</span>
@@ -37,11 +38,11 @@ layout: default
 
       <span class="dot">•</span>
       <span class="lang-info">
-        Language: 
+        Language:
         {% if page.lang == "zh-Hant" %}
-          繁體中文
+        繁體中文
         {% else %}
-          English
+        English
         {% endif %}
       </span>
     </p>
@@ -50,27 +51,27 @@ layout: default
   <section class="post-content">
     {{ content }}
   </section>
-  
+
   <hr>
 
   <nav class="post-navigation" style="display: flex; justify-content: space-between; margin-top: 20px;">
-      {% if page.previous.url %}
-          <p class="previous" style="margin: 0;">
-              ⬅️ Previous: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
-          </p>
-      {% endif %}
+    {% if page.previous.url %}
+    <p class="previous" style="margin: 0;">
+      ⬅️ Previous: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
+    </p>
+    {% endif %}
 
-      {% if page.next.url %}
-          {% unless page.previous.url %}
-              <p class="next" style="margin: 0;">
-                  Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a> ➡️
-              </p>
-          {% else %}
-              <p class="next" style="margin: 0;">
-                  Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a> ➡️
-              </p>
-          {% endunless %}
-      {% endif %}
+    {% if page.next.url %}
+    {% unless page.previous.url %}
+    <p class="next" style="margin: 0;">
+      Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a> ➡️
+    </p>
+    {% else %}
+    <p class="next" style="margin: 0;">
+      Next: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a> ➡️
+    </p>
+    {% endunless %}
+    {% endif %}
   </nav>
 
   <script>
@@ -83,5 +84,10 @@ layout: default
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <script type="module">
+    import mermaid from 'https://jsdelivr.net';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
 
 </article>
