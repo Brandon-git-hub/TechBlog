@@ -1,6 +1,7 @@
 title: "Brandon's Tech Blog"
 description: "Learning notes on IC design, Verilog, and more"
 theme: minima
+timezone: Asia/Taipei
 
 # 你的 GitHub Pages Project Pages 路徑
 url: "https://brandon-git-hub.github.io"
