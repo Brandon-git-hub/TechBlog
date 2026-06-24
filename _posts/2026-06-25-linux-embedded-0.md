@@ -19,33 +19,12 @@ lang: zh-Hant
 
 ### 1.1 專案目錄拓撲 (BSP Project Topology)
 專案根目錄下之目錄結構與平行子專案組織如下所示：
-```
-~/beaglebone_linux_bsp$ ls
-kernel  output  rootfs  u-boot
-```
+
 * **`u-boot/`**：存放 U-Boot 原始碼，負責編譯產出二進位引導負載程式（`MLO` 與 `u-boot.img`）以及引導腳本（`boot.scr`）。
 * **`kernel/`**：存放 Linux 核心原始碼，負責編譯產出核心映像檔（`uImage`）與硬體設備樹二進位檔（`am335x-boneblack.dtb`）。
 * **`output/`**：編譯產物統一收集與轉運中心。各子專案編譯完成後，會自動將目標檔案複製至此目錄，以利後續統一部署。
 * **`rootfs/`**：用於建置與掛載根檔案系統（Root File System）。
 
-為便於理解各子目錄間之建置關係與產物流向，下圖以 Mermaid 流程圖展示專案拓撲架構：
-
-<!-- ```mermaid -->
-<pre class="mermaid">
-graph TD
-    subgraph Root [專案根目錄: ~/beaglebone_linux_bsp]
-        UB[u-boot/]
-        KE[kernel/]
-        OUT[output/]
-        RF[rootfs/]
-    end
-
-    UB -- "1. 編譯引導元件 (MLO, u-boot.img, boot.scr)" --> OUT
-    KE -- "2. 編譯核心與設備樹 (uImage, dtb)" --> OUT
-    OUT -- "3. 物理部署 (tasks.json)" --> SD_FAT32[SD Card FAT32 分區: /media/brandon/boot/]
-    RF -- "4. 掛載根檔案系統 (DDR3 / OS 運作)" --> SD_EXT4[SD Card Ext4 分區: /media/brandon/rootfs/]
-</pre>
-<!-- ``` -->
 
 ### 1.2 物理硬體與除錯介面 (Target Board Details)
 * **目標板**：TI AM335x BeagleBone Black (BBB)。核心為 ARM Cortex-A8 結構，配備 512MB DDR3 記憶體與 4GB eMMC。
@@ -155,15 +134,11 @@ sudo systemctl enable --now open-vm-tools
 
 BeagleBone Black 採用複雜的多階段引導機制，以解決上電初期硬體資源極度受限之問題。啟動鏈由四個軟硬體階段依次傳遞（如下圖所示）：
 
-<!-- ```mermaid -->
-<pre class="mermaid">
-graph TD
-    A[第一階段: ROM Code] -- 讀取 SD卡 FAT32 分區 --> B[第二階段: MLO / U-Boot SPL]
-    B -- 初始化 DDR3 DRAM 並載入 --> C[第三階段: u-boot.img]
-    C -- 執行 boot.scr 載入 dtb 與 uImage --> D[第四階段: Linux Kernel]
-    D -- 掛載 rootfs 分區 --> E[BeagleBone OS 執行環境]
-</pre>
-<!-- ``` -->
+<!-- ![](/assets/26_0625/Linux_boot.svg) -->
+
+<p align="center">
+<img src="{{ '/assets/26_0625/Linux_boot.svg' | relative_url }}" width="400">
+</p>
 
 ### 4.1 唯讀記憶體引導階段 (ROM Code / Initial Boot Stage)
 * **存放位置**：固化於 AM3358 SoC 內部唯讀記憶體（ROM）中。
