@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "📥 Copy to SD Card",
+            "type": "shell",
+            "command": "cp uImage am335x-boneblack.dtb MLO u-boot.img boot.scr /media/brandon/boot/ && sync && echo '==== [SUCCESS] All files safely copied to SD Card! ===='",
+            "problemMatcher": []
+        }
+    ]
+}

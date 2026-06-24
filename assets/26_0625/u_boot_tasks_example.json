@@ -1,0 +1,52 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🔍 List Device Info",
+            "type": "shell",
+            "command": "lsblk",
+            "problemMatcher": []
+        },
+        {
+            "label": "💾 SD: Mount boot & rootfs",
+            "type": "shell",
+            "command": "echo '==== Auto Mounting partitions via udisksctl ====' && udisksctl mount -b /dev/sdb1 && udisksctl mount -b /dev/sdb2",
+            "problemMatcher": []
+        },
+        {
+            "label": "💾 SD: Unmount & Eject",
+            "type": "shell",
+            "command": "echo '==== Syncing & Unmounting safely ====' && sync && udisksctl unmount -b /dev/sdb1 && udisksctl unmount -b /dev/sdb2 && echo '==== [SUCCESS] Safe to physical eject SD Card! ===='",
+            "problemMatcher": []
+        },
+        {
+            "label": "📁 Boot Proj Size",
+            "type": "shell",
+            "command": "du -sh .",
+            "problemMatcher": []
+        },
+        {
+            "label": "🚀 Compile U-boot",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "export ARCH=arm && export CROSS_COMPILE=arm-linux-gnueabi- && make am335x_evm_config && make && echo '==== Copying Build Artifacts to Output ====' && cp MLO u-boot.img ../output/ && echo '==== DONE! Files safely placed in output/ ===='",
+            "problemMatcher": []
+        },
+        {
+            "label": "📚 U-boot Menu",
+            "type": "shell",
+            "command": "export ARCH=arm && export CROSS_COMPILE=arm-linux-gnueabi- && make menuconfig",
+            "problemMatcher": []
+        },
+        {
+            "label": "📜 Boot Script",
+            "group": "build",
+            "type": "shell",
+            "command": "mkimage -C none -A arm -T script -n '@BrandonEmbedded boot scr'  -d boot.cmd boot.scr && echo '==== Copying Script to Output ====' && cp boot.scr ../output/ && echo '==== DONE! Files safely placed in output/ ===='",
+            "problemMatcher": []
+        }
+    ]
+}

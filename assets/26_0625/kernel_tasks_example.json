@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "📁 Kernel Proj Size",
+            "type": "shell",
+            "command": "du -sh .",
+            "problemMatcher": []
+        },
+        {
+            "label": "💡 Kernel Defconfig",
+            "type": "shell",
+            "command": "mkdir -p build_image/build && make O=build_image/build ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- omap2plus_defconfig",
+            "problemMatcher": []
+        },
+        {
+            "label": "💡 Kernel Menuconfig",
+            "type": "shell",
+            "command": "make O=build_image/build ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig",
+            "problemMatcher": []
+        },
+        {
+            "label": "🚀 Complete Build Kernel & DTB",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "echo '==== [Step 1] Compiling Kernel Image (uImage) ====' && make -j$(nproc) O=build_image/build ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- LOADADDR=0x80008000 uImage && echo '==== [Step 2] Compiling Device Tree (DTB) ====' && make O=build_image/build ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- dtbs && echo '==== [Step 3] Safely Copying Build Artifacts to Project Output ==== ' && mkdir -p ../output && cp build_image/build/arch/arm/boot/uImage ../output/ && cp build_image/build/arch/arm/boot/dts/ti/omap/am335x-boneblack.dtb ../output/ && echo '==== [SUCCESS] uImage and am335x-boneblack.dtb are ready in beaglebone_linux_bsp/output/ ===='",
+            "problemMatcher": []
+        },
+        {
+            "label": "📦 Clean Kernel Build",
+            "type": "shell",
+            "command": "rm -rf build_image/ && make mrproper",
+            "problemMatcher": []
+        }
+    ]
+}
