@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "U-Boot 與 Linux Kernel 編譯、移植與部署自動化實作筆記"
-subtitle: "基於 TI AM335x (BeagleBone Black) 平台之建立交叉編譯與 AI 輔助開發工作流"
+subtitle: "基於 BeagleBone Black 平台之建立交叉編譯與 AI 輔助開發工作流"
 categories: [Linux]
 date: 2026-06-25
 lang: zh-Hant
@@ -9,7 +9,7 @@ lang: zh-Hant
 
 ## 摘要 (Abstract)
 
-本文記錄基於德州儀器（TI）Sitara AM3358 處理器（以 BeagleBone Black 開發板為載體）之嵌入式 Linux 系統建置實作過程。內容涵蓋自底層硬體與虛擬化開發主機環境之建構、交叉編譯工具鏈之配置、U-Boot 與 Linux 核心（Kernel）原始碼之編譯，乃至最終開機引導程式與核心映像檔於安全數位卡（SD Card）之部署。此外，本文針對傳統 Samba 協定配合 PuTTY 終端機之工作流，與現代人工智慧輔助整合開發環境（AI-Assisted IDE，以 Antigravity IDE 為代表）進行系統性對比與評估，並詳細說明利用指令行工具 `vmrun` 進行虛擬機無介面（Headless）背景運行管理之實作細節。最後，提出一套透過 `tasks.json` 自動化建構與部署之方案，以期提升嵌入式 BSP（板級支持包）之移植效率。
+本文實作並記錄基於 BeagleBone Black 開發板 (核心為德州儀器 TI Sitara AM3358 處理器) 之嵌入式 Linux 系統建置流程。涵蓋自底層硬體與虛擬化開發主機環境之建構、交叉編譯工具鏈之配置、U-Boot 與 Linux 核心（Kernel）原始碼之編譯，乃至最終開機引導程式與核心映像檔於安全數位卡（SD Card）之部署。 為了提升開發效率節省硬體資源，利用指令行工具 `vmrun` 進行虛擬機無介面（Headless）背景運行管理，並在 Windows 宿主端 (Host) 透過 SSH 連線至虛擬機（Guest）進行遠端開發。 此外，除了搭建傳統 Samba Server 配合 PuTTY 終端機的遠端模式，另外也整合了類 VS Code 的現代人工智慧輔助整合開發環境（AI-Assisted IDE）之工作流，透過一套 `tasks.json` 自動化建構與部署，提升嵌入式 BSP（板級支持包）開發效率。
 
 ---
 
