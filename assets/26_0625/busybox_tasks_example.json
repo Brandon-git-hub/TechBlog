@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "📁 BusyBox Proj Size",
+            "type": "shell",
+            "command": "du -sh .",
+            "problemMatcher": []
+        },
+        {
+            "label": "💡 BusyBox Defconfig",
+            "type": "shell",
+            "command": "make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- defconfig",
+            "problemMatcher": []
+        },
+        {
+            "label": "💡 BusyBox Menuconfig",
+            "type": "shell",
+            "command": "make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig",
+            "problemMatcher": []
+        },
+        {
+            "label": "🚀 Compile BusyBox",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "make -j$(nproc) ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-",
+            "problemMatcher": []
+        },
+        {
+            "label": "🚀 Install BusyBox",
+            "type": "shell",
+            "command": "make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install",
+            "problemMatcher": []
+        }
+    ]
+}
