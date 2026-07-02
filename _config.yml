@@ -1,13 +1,16 @@
 title: "Brandon's Tech Blog"
-description: "Learning notes on IC design, Verilog, and more"
+description: "Learning notes on Embedded System, IC Design, and more"
 theme: minima
 timezone: Asia/Taipei
 
-# 你的 GitHub Pages Project Pages 路徑
 url: "https://brandon-git-hub.github.io"
 baseurl: "/TechBlog"
 
-# 讓 header 短小精幹
 header_pages:
   - index.md
   - categories.md
+
+include:
+  - "**/*.bat"
+  - "**/*.ps1"
+  - "**/*.json"

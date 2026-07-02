@@ -9,7 +9,7 @@ lang: zh-Hant
 
 ## 摘要 (Abstract)
 
-本文實作並記錄基於 BeagleBone Black 開發板 (核心為德州儀器 TI Sitara AM3358 處理器) 之嵌入式 Linux 系統建置流程。涵蓋自底層硬體與虛擬化開發主機環境之建構、交叉編譯工具鏈之配置、U-Boot 與 Linux 核心（Kernel）原始碼之編譯，乃至最終開機引導程式與核心映像檔於安全數位卡（SD Card）之部署。 為了提升開發效率節省硬體資源，利用指令行工具 `vmrun` 進行虛擬機無介面（Headless）背景運行管理，並在 Windows 宿主端 (Host) 透過 SSH 連線至虛擬機（Guest）進行遠端開發。 此外，除了搭建傳統 Samba Server 配合 PuTTY 終端機的遠端模式，另外也整合了類 VS Code 的現代人工智慧輔助整合開發環境（AI-Assisted IDE）之工作流，透過一套 `tasks.json` 自動化建構與部署，提升嵌入式 BSP（板級支持包）開發效率。
+本文實作並記錄基於 BeagleBone Black 開發板 (核心為德州儀器 TI Sitara AM3358 處理器) 之嵌入式 Linux 系統建置流程。涵蓋自底層硬體與虛擬化開發主機環境之建構、交叉編譯工具鏈之配置、U-Boot 與 Linux 核心（Kernel）原始碼之編譯，乃至最終開機引導程式與核心映像檔於安全數位卡（SD Card）之部署。 為了提升開發效率節省硬體資源，利用指令行工具 `vmrun` 進行虛擬機無介面（Headless）背景運行管理，並在 Windows 宿主端 (Host) 透過 SSH 連線至虛擬機（Guest）進行遠端開發。 此外，除了搭建傳統 Samba Server 配合 PuTTY 終端機的遠端模式，另外也整合了類 VS Code 的現代人工智慧輔助整合開發環境（AI-Assisted IDE）之工作流，透過一套 `tasks.json` 自動化建構與部署，提升開發效率。
 
 ---
 
@@ -156,6 +156,7 @@ sudo systemctl enable --now open-vm-tools
   ```powershell
   vmrun list
   ```
+  
 這邊分享撰寫的兩個腳本檔案，實現對虛擬機的背景控制或選單化管理。
 
 #### 3.2.1 核心控制指令腳本：[`vm_control.ps1`](../assets/26_0625/vm_control.ps1)
@@ -209,7 +210,11 @@ BeagleBone Black 採用多階段引導機制，解決上電初期硬體資源受
 * **核心行為**：Linux 核心獲取控制權後，輸出 `Starting kernel ...` 訊息。核心透過設備樹初始化晶片之時鐘、驅動周邊控制器，並偵測儲存媒介。
 * **根目錄掛載**：核心初始化完畢後，會依據啟動參數（`bootargs`），掛載 SD 卡的第二分區（通常為 Ext3/Ext4 分區，標籤為 **`rootfs`**）作為根目錄 `/`。核心隨後啟動使用者空間的第一個進程 `/sbin/init`，調用各種初始化服務。
 
-### 4.5 清除板載 eMMC
+---
+
+## 5. 建置開機環境前的硬體準備
+
+### 5.1 清除板載 eMMC
 BeagleBone Black 出廠時，其板載 eMMC 已預燒錄作業系統。若未加以清除，系統開機時可能會優先自 eMMC 啟動舊版引導程式，進而干擾我們採用的 SD 卡開機實作測試。因此，在 U-Boot 命令列先將 eMMC 的引導磁區清除（`mmc0` 為 SD 卡，`mmc1` 為 eMMC）：
 ```bash
 # 切換至板載 eMMC 設備
@@ -218,11 +223,24 @@ BeagleBone Black 出廠時，其板載 eMMC 已預燒錄作業系統。若未加
 => mmc erase 0 20000
 ```
 
+### 5.2 SD 卡分割與格式化
+
+以下是在 Ubuntu (虛擬機) 上對 SD 卡進行分割與格式化的指令。
+
+```bash
+# 建立 FAT32 分區（標籤為 boot，用於存放 MLO、u-boot.img、boot.scr、uImage）
+mkfs.vfat -F 32 -n "boot" /dev/sdx
+# 建立 Ext3 分區（標籤為 rootfs，用於存放根檔案系統）
+mke2fs -j -L "rootfs" /dev/sdx
+```
+
+> `sdx` 的 `x` 是需要自行替換為實際的裝置名稱，可能是 sda、sdb、sdc...，可以用 `lsblk` 來查看。
+
 ---
 
-## 5. 原始碼和編譯工具 (交叉編譯工具、U-boot&kernel)
+## 6. 原始碼和編譯工具 (交叉編譯工具、U-boot&kernel)
 
-### 5.1 交叉編譯工具鏈之原理與部署
+### 6.1 交叉編譯工具鏈之原理與部署
 由於電腦 CPU 架構（一般為 x86_64）與目標板 CPU 架構（ARMv7-A，32-bit）不同，無法直接編譯為目標板設計的機器碼，因此必須引入**交叉編譯工具鏈（Cross-Compiler Toolchain）**。
 在 Ubuntu 系統中，可直接透過進階軟體包工具（APT）安裝適用於 ARM 32-bit 架構的 GCC 編譯器：
 ```bash
@@ -231,7 +249,7 @@ sudo apt-get install -y gcc-arm-linux-gnueabi build-essential
 ```
 此工具鏈的前綴為 `arm-linux-gnueabi-`，gnu 後面的 eabi 是 Embedded Application Binary Interface 的縮寫，ABI 是決定兩個不同的程式或系統之間溝通的規則，例如資料型態大小、暫存器使用方式、函式呼叫慣例等。
 
-### 5.2 U-Boot 與 Linux Kernel 源碼獲取
+### 6.2 U-Boot 與 Linux Kernel 源碼獲取
 原始碼可自官方託管倉庫取得：
 * **U-Boot 原始碼**：
   ```bash
@@ -246,15 +264,14 @@ sudo apt-get install -y gcc-arm-linux-gnueabi build-essential
 大型專案原始碼倉庫（特別是 Linux Kernel）之 Git 歷史記錄與多架構代碼極為龐大，不僅佔用磁碟空間，亦會嚴重降低 IDE 目錄解析與索引建立之速度。因此複製時建議使用限制拉取(Shallow Clone)，僅保留最新一筆 Commit 歷史，避免下載過往數十萬筆歷史變更：
 ```bash
 git clone --depth 1 --branch <branch> <remote_repository>
-
 ```
 將<branch>替換成想要的branch，<remote_repository>替換成想要拉取的倉庫網址。
 
 ---
 
-## 6. U-boot 與 Linux kernel 編譯和打包
+## 7. U-boot 與 Linux kernel 編譯和打包
 
-### 6.1 U-Boot 編譯流程
+### 7.1 U-Boot 編譯流程
 1. **宣告環境變數**：
    ```bash
    export ARCH=arm
@@ -274,7 +291,7 @@ git clone --depth 1 --branch <branch> <remote_repository>
    ```
    編譯成功後，根目錄下將產生次級引導映像檔 `MLO` 與引導程式主映像檔 `u-boot.img`。
 
-### 6.2 Linux Kernel 編譯流程
+### 7.2 Linux Kernel 編譯流程
 1. **配置目標板設定檔**（將編譯中間檔輸出至指定目錄）：
    ```bash
    export ARCH=arm
@@ -286,10 +303,10 @@ git clone --depth 1 --branch <branch> <remote_repository>
    ```bash
    make -j$(nproc) O=build_image/build LOADADDR=0x80008000 uImage
    ```
-   > [!IMPORTANT]
    > **LOADADDR=0x80008000 之原理**：
    > 核心映像檔 `uImage` 實質上是由壓縮後之核心 `zImage` 加上由 `mkimage` 產生之 64 位元組（40H）標頭封裝而成。該標頭紀錄了引導參數、校驗和以及核心在記憶體中的預期載入位址（Load Address，即 `0x80008000`）與入口位址（Entry Point，即 `0x80008040`）。
    > 在 ARM 架構中，系統實體記憶體（DDR DRAM）之物理起始位址通常映射於 `0x80000000`。依據 Linux 核心之啟動規範，前 32KB（即 `0x8000` 位址偏移，亦即 `0x00008000`）必須保留給內核頁表、零頁異常向量與開機參數塊（Agress Parameter Block / ATags）。因此，核心之載入位址必須設為 `0x80000000 + 0x8000 = 0x80008000`。
+
    若編譯過程中拋出 `lzop: not found` 錯誤，需執行 `sudo apt-get install lzop`；若提示 `mkimage` 命令行不存在，則需將 U-Boot 編譯生成之 `tools/mkimage` 複製至系統執行路徑下：
    ```bash
    sudo cp <u-boot-directory>/tools/mkimage /usr/local/bin/
@@ -302,11 +319,11 @@ git clone --depth 1 --branch <branch> <remote_repository>
 
 ---
 
-## 7. 多子專案自動化建置和部屬 (VSCode tasks)
+## 8. 多子專案自動化建置和部署 (VSCode tasks)
 
 基於子專案架構（`u-boot`, `kernel`, `busybox`, `output`, `rootfs`），我們在各工作區目錄下配置對應的 `.vscode/tasks.json`，將各階段之編譯與物理燒錄步驟封裝成自動化任務。
 
-### 7.1 U-Boot 專案自動化任務：[`u_boot_tasks_example.json`](../assets/26_0625/u_boot_tasks_example.json)
+### 8.1 U-Boot 專案自動化任務：[`u_boot_tasks_example.json`](../assets/26_0625/u_boot_tasks_example.json)
 此設定檔配置於 `u-boot/` 目錄下。除了提供編譯任務外，亦提供了 SD 卡的自動化掛載（利用 `udisksctl` 輸入密碼後自動掛載）與卸載，並在編譯成功後，將 `MLO` 與 `u-boot.img` 自動複製至上層的 `../output/` 目錄中：
 
 ```json
@@ -364,7 +381,7 @@ git clone --depth 1 --branch <branch> <remote_repository>
 }
 ```
 
-### 7.2 Linux 核心專案自動化任務：[`kernel_tasks_example.json`](../assets/26_0625/kernel_tasks_example.json)
+### 8.2 Linux 核心專案自動化任務：[`kernel_tasks_example.json`](../assets/26_0625/kernel_tasks_example.json)
 此設定檔配置於 `kernel/` 目錄下。它定義了預設的建置配置、`menuconfig` 互動選單，並在平行編譯完成後，將 `uImage` 與 `am335x-boneblack.dtb` 轉移至 `../output/` 目錄：
 ```json
 {
@@ -408,7 +425,23 @@ git clone --depth 1 --branch <branch> <remote_repository>
 }
 ```
 
-### 7.3 Busybox 專案自動化任務：[`busybox_tasks_example.json`](../assets/26_0625/busybox_tasks_example.json)
+### 8.3 開機引導元件部署專案自動化任務：[`output_tasks_example.json`](../assets/26_0625/output_tasks_example.json)
+此設定檔配置於專案收集目錄 `output/` 中，負責將在此處集齊的所有引導元件（`MLO`、`u-boot.img`、`uImage`、`am335x-boneblack.dtb`、`boot.scr`）一鍵搬移至已掛載的 SD 卡的第一分區中：
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "📥 Copy to SD Card",
+            "type": "shell",
+            "command": "cp uImage am335x-boneblack.dtb MLO u-boot.img boot.scr /media/brandon/boot/ && sync && echo '==== [SUCCESS] All files safely copied to SD Card! ===='",
+            "problemMatcher": []
+        }
+    ]
+}
+```
+
+### 8.4 Busybox 專案自動化任務：[`busybox_tasks_example.json`](../assets/26_0625/busybox_tasks_example.json)
 此設定檔配置於 `busybox/.vscode/tasks.json`。
 ```json
 {
@@ -452,27 +485,233 @@ git clone --depth 1 --branch <branch> <remote_repository>
 }
 ```
 
-### 7.4 物理部署專案自動化任務：[`output_tasks_example.json`](../assets/26_0625/output_tasks_example.json)
-此設定檔配置於專案收集目錄 `output/` 中，負責將在此處集齊的所有引導元件（`MLO`、`u-boot.img`、`uImage`、`am335x-boneblack.dtb`、`boot.scr`）一鍵搬移至已掛載的 SD 卡的第一分區中：
-```json
-{
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "📥 Copy to SD Card",
-            "type": "shell",
-            "command": "cp uImage am335x-boneblack.dtb MLO u-boot.img boot.scr /media/brandon/boot/ && sync && echo '==== [SUCCESS] All files safely copied to SD Card! ===='",
-            "problemMatcher": []
-        }
-    ]
-}
+## 9. 建置過程的設置修改
+
+### 9.1 U-boot 的設置修改
+
+U-boot 建置與部署到 SD Card，我實作很順利。 除了上面有提到的舊版映像檔格式支援 (Legacy Image Format)，需要去檢查。由於我是使用 nogui 去操作，外部設備需要手動去將 device 掛載起來，雖然說插上 USB 孔後，我們執行 "🔍 List Device Info" ("lsblk")，可以看到 sda, sdb 的裝置，但此時其實只有底層硬體被電腦辨識，還沒有被掛載到檔案系統中，必須要再執行 "💾 SD: Mount boot & rootfs" ("udisksctl") 將指定的 sdb1, sdb2 掛起來 (依據實際情況調整)。
+
+還有 U-boot 我們可以撰寫開機腳本 (`boot.scr`) 去控制開機過程。 若不用腳本，就須每次進入 U-Boot 命令列介面（`=>`）去一行一行輸入指令，以下為我的範例，位址相對設的很保守:
+
+```cmd
+setenv bootargs console=ttyO0,115200 earlyprintk root=/dev/mmcblk0p2 rw rootwait rootdelay=2
+fatload mmc 0:1 0x88000000 am335x-boneblack.dtb
+fatload mmc 0:1 0x82000000 uImage
+bootm 0x82000000 - 0x88000000
 ```
+
+這裡我有開啟 earlyprintk 進行除錯，因為當初有遇到卡在 `Starting kernel ...` 後沒有後續了，為了尋找問題，開啟後 Log 會比較詳細 (不過問題事實上出在 Kernel 設置那邊)。
+還有就是雖然如同 `Documentation/admin-guide/devices.txt` 中，TTY 設備如今都改成如 `/dev/ttyS0` ，但系統開機後會自動轉換從 `/dev/ttyO0` 到 `/dev/ttyS0`，所以 console 直接打 `/dev/ttyO0` 即可。
+
+```txt
+4 char	TTY devices
+		  0 = /dev/tty0		Current virtual console
+
+		  1 = /dev/tty1		First virtual console
+		    ...
+		 63 = /dev/tty63	63rd virtual console
+		 64 = /dev/ttyS0	First UART serial port
+		    ...
+		255 = /dev/ttyS191	192nd UART serial port
+
+		UART serial ports refer to 8250/16450/16550 series devices.
+
+		Older versions of the Linux kernel used this major
+		number for BSD PTY devices.  As of Linux 2.1.115, this
+		is no longer supported.	 Use major numbers 2 and 3.
+```
+
+
+### 9.2 Linux 核心的設置修改
+
+如同上面講到遇到卡在 `Starting kernel ...`，有做了些調整，一是到 kenel 的 menuconfig，搜尋 CONFIG_DEBUG_OMAP2UART1 查找設置位置，將 Debug console port 的輸出從 OMAP 2/3/4 改到 AM33XXUART1。
+
+<!-- ![](/assets/26_0625/CONFIG_DEBUG_OMAP2UART1.png) -->
+
+<p align="center">
+<img src="{{ '/assets/26_0625/CONFIG_DEBUG_OMAP2UART1.png' | relative_url }}" width="600">
+</p>
+
+進入選單，選到 AM33XX UART1，改完後就可以看到 Kernel Log 跑出來了。
+
+<!-- ![](/assets/26_0625/CONFIG_DEBUG_AM33XXUART1.png) -->
+
+<p align="center">
+<img src="{{ '/assets/26_0625/CONFIG_DEBUG_AM33XXUART1.png' | relative_url }}" width="600">
+</p>
+
+但後續還有遇到 pinmux 衝突問題，所以去改了 dts (`beaglebone_linux_bsp/kernel/arch/arm/boot/dts/ti/omap/am33xx-l4.dtsi`) 裡面的 #pinctrl-cells 從 <1> 改成 <2>。 
+
+```
+            scm: scm@0 {
+				compatible = "ti,am3-scm", "simple-bus";
+				reg = <0x0 0x2000>;
+				#address-cells = <1>;
+				#size-cells = <1>;
+				#pinctrl-cells = <2>;
+				ranges = <0 0 0x2000>;
+
+				am33xx_pinmux: pinmux@800 {
+					compatible = "pinctrl-single";
+					reg = <0x800 0x238>;
+					#pinctrl-cells = <2>;
+					pinctrl-single,register-width = <32>;
+					pinctrl-single,function-mask = <0x7f>;
+				};
+```
+
+以上我改完，成功看到 `Trying libraries: m resolv rt`, `Final link with: m resolv` 訊息。然後就開始卡在 init 階段，接下來就剩下 rootfs 的建置了。
+
+
+### 9.3 Busybox 的設置與建置
+
+同樣 make defconfig，編譯過程有錯，透過訊息去 menuconfig 將 Networking Utilities -> 取消勾選 tc。
+
+<!-- ![](/assets/26_0625/BusyBox_tc_disable.png) -->
+
+<p align="center">
+<img src="{{ '/assets/26_0625/BusyBox_tc_disable.png' | relative_url }}" width="600">
+</p>
+
+還有我們必須在 Settings -> Destination path for 'make install' 中設定一個絕對路徑，讓 busybox 自動 copy 過去，相對位址會失敗。
+
+<!-- ![](/assets/26_0625/BusyBox_make_install_dir.png) -->
+
+<p align="center">
+<img src="{{ '/assets/26_0625/BusyBox_make_install_dir.png' | relative_url }}" width="600">
+</p>
+
+make 編譯和 install 完，會發現我們的 `roofts` 裡面資料夾沒有想像中完整，後續我們需要將基本目錄完善，以及創建一些預設的檔案。
+這邊我先偷懶，簡單附上所需要執行的步驟，後續有空再細緻整理與筆記。
+
+建立基本目錄和修改權限
+```bash
+mkdir dev etc home lib proc sys tmp var
+mkdir usr/lib
+mkdir var/log
+sudo chmod 4755 bin/ping
+sudo chmod 1777 tmp
+```
+
+BusyBox 有些動態連結函數庫，我們需要將他們從工具鏈手動copy到rootfs中，先觀察需要的函數庫，指令如下：
+
+```bash
+arm-linux-gnueabi-readelf -a ./bin/busybox | grep "program interpreter"
+arm-linux-gnueabi-readelf -a ./bin/busybox | grep "Shared library"
+```
+
+得到類似以下訊息：
+```
+ 0x00000001 (NEEDED)                     Shared library: [libm.so.6]
+ 0x00000001 (NEEDED)                     Shared library: [libresolv.so.2]
+ 0x00000001 (NEEDED)                     Shared library: [libc.so.6]
+ 0x00000001 (NEEDED)                     Shared library: [ld-linux.so.3]
+```
+
+複製過去
+```bash
+cp -a /usr/arm-linux-gnueabi/lib/libm.so.6 lib
+cp -a /usr/arm-linux-gnueabi/lib/libc.so.6 lib
+cp -a /usr/arm-linux-gnueabi/lib/ld-linux.so.3 lib
+cp -a /usr/arm-linux-gnueabi/lib/libresolv.so.2 lib
+```
+
+建立基本device node
+```bash
+sudo mknod -m 600 dev/console c 5 1
+sudo mknod -m 666 dev/null c 1 3
+```
+
+創建/連結init檔案至busybox執行檔
+```bash
+ln -s bin/busybox init
+```
+
+建立inittab
+```bash
+::sysinit:/etc/init.d/rcS
+console::askfirst:-/bin/sh
+```
+
+修改inittab的權限
+```bash
+sudo chmod 644 ./etc/inittab
+```
+
+建立init.d目錄 及 rcS
+```bash
+mkdir ./etc/init.d/
+```
+
+撰寫 ./etc/init.d/rcS 內容如下：
+```
+#! /bin/sh
+/bin/mount -a
+```
+
+修改./etc/init.d/rcS 的權限
+```bash
+sudo chmod 755 ./etc/init.d/rcS
+```
+
+建立group
+```bash
+mkdir ./etc/group
+```
+
+group 內容如下：
+```
+root:x:0:
+```
+
+修改group的權限
+```bash
+sudo chmod 644 ./etc/group
+```
+
+建立passwd
+```bash
+mkdir ./etc/passwd
+```
+
+passwd 內容如下：
+```
+root::0:0:root:/root:/bin/sh
+```
+
+修改passwd的權限
+```bash
+sudo chmod 644 ./etc/passwd
+```
+
+建立fstab
+```bash
+mkdir ./etc/fstab
+```
+
+fstab 內容如下：
+```
+proc /proc proc defaults 0 0
+none /tmp ramfs defaults 0 0
+sysfs /sys sysfs defaults 0 0
+```
+
+修改fstab的權限
+```bash
+sudo chmod 644 ./etc/fstab
+```
+
+將rootfs copy到sd card
+```bash
+sudo cp -rf ./* /media/brandon/rootfs/
+```
+
 
 ---
 
-## 8. 感想
+## 10. 感想
 
-能看到 Linux 系統在開發板上啟動，可以透過命令列輸入常見的指令，並看到回應，是真的非常開心的，因為這個系統是全員自己編譯和部屬的，也將原本神秘的作業系統底層變得更具體。
+能看到 Linux 系統在開發板上啟動，可以透過命令列輸入熟悉的指令，並看到回應，是非常開心的，因為這個系統全部是自己一步一步編譯和部署的，原本眼中神秘的作業系統現在變得真實許多。
 
 
 ## 📚 Reference

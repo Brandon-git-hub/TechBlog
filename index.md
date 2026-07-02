@@ -6,6 +6,7 @@ title: "Technique Learning Note"
 Welcome to my blog！  
 I will update my technical learning notes here.
 Recent Interests:
+* Embedded System
 * Verilog 
 * IC Design
 * Design for Testing
