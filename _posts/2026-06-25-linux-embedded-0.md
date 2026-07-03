@@ -110,7 +110,7 @@ beaglebone_linux_bsp/
   ```
   設定 Samba 密碼並重啟服務：
   ```bash
-  sudo smbpasswd -a [username]
+  sudo smbpasswd -a <username>
   sudo /etc/init.d/smbd restart
   ```
   可以在 Windows 系統中，透過「連線網路磁碟機」掛載 `\\<VM_IP>\Share`，查看 IP 可透過 ifconfig (需安裝 net-tools)。 看你的電腦是用乙太網路還是 WiFi，選擇對應的網卡介面訊息，如 Ethernet (en開頭) 或 Wi-Fi (wl開頭)，inet後接的就是 IPv4 地址。
@@ -711,7 +711,7 @@ sudo chmod 644 ./etc/fstab
 
 將rootfs copy到sd card
 ```bash
-sudo cp -rf ./* /media/brandon/rootfs/
+sudo cp -rf ./* /media/username/rootfs/
 ```
 
 ---
