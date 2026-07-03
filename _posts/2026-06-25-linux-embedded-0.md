@@ -244,7 +244,7 @@ mke2fs -j -L "rootfs" /dev/sdx
 
 ---
 
-## 6. 原始碼和編譯工具 (交叉編譯工具、U-boot&kernel)
+## 6. 原始碼和編譯工具 (交叉編譯工具、U-boot & kernel & busybox)
 
 ### 6.1 交叉編譯工具鏈之原理與部署
 由於電腦 CPU 架構（一般為 x86_64）與目標板 CPU 架構（ARMv7-A，32-bit）不同，無法直接編譯為目標板設計的機器碼，因此必須引入**交叉編譯工具鏈（Cross-Compiler Toolchain）**。
@@ -255,7 +255,7 @@ sudo apt-get install -y gcc-arm-linux-gnueabi build-essential
 ```
 此工具鏈的前綴為 `arm-linux-gnueabi-`，gnu 後面的 eabi 是 Embedded Application Binary Interface 的縮寫，ABI 是決定兩個不同的程式或系統之間溝通的規則，例如資料型態大小、暫存器使用方式、函式呼叫慣例等。
 
-### 6.2 U-Boot 與 Linux Kernel 源碼獲取
+### 6.2 U-Boot、Linux Kernel 與 Busybox 源碼獲取
 原始碼可自官方託管倉庫取得：
 * **U-Boot 原始碼**：
   ```bash
@@ -265,6 +265,10 @@ sudo apt-get install -y gcc-arm-linux-gnueabi build-essential
 * **Linux Kernel 原始碼**（以 Longterm 分支 v6.6 為例）：
   ```bash
   git clone --depth 1 --single-branch --branch v6.6.58-ti-arm32-r15 https://github.com/beagleboard/linux.git
+  ```
+* **Busybox 原始碼**：
+  ```bash
+  git clone --depth 1 -b 1_36_stable git://busybox.net/busybox.git
   ```
 
 大型專案原始碼倉庫（特別是 Linux Kernel）之 Git 歷史記錄與多架構代碼極為龐大，不僅佔用磁碟空間，亦會嚴重降低 IDE 目錄解析與索引建立之速度。因此複製時建議使用限制拉取(Shallow Clone)，僅保留最新一筆 Commit 歷史，避免下載過往數十萬筆歷史變更：
