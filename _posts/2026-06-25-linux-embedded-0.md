@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "U-Boot 與 Linux Kernel 編譯、移植與部署自動化實作筆記"
+title: "U-Boot、Linux Kernel 與 BusyBox 交叉編譯、部署自動化實作筆記"
 subtitle: "基於 BeagleBone Black 平台之建立交叉編譯與 AI 輔助開發工作流"
 categories: [Linux]
 date: 2026-06-25
@@ -9,7 +9,7 @@ lang: zh-Hant
 
 ## 摘要 (Abstract)
 
-本文實作並記錄基於 BeagleBone Black 開發板 (核心為德州儀器 TI Sitara AM3358 處理器) 之嵌入式 Linux 系統建置流程。涵蓋自底層硬體與虛擬化開發主機環境之建構、交叉編譯工具鏈之配置、U-Boot 與 Linux 核心（Kernel）原始碼之編譯，乃至最終開機引導程式與核心映像檔於安全數位卡（SD Card）之部署。 為了提升開發效率節省硬體資源，利用指令行工具 `vmrun` 進行虛擬機無介面（Headless）背景運行管理，並在 Windows 宿主端 (Host) 透過 SSH 連線至虛擬機（Guest）進行遠端開發。 此外，除了搭建傳統 Samba Server 配合 PuTTY 終端機的遠端模式，另外也整合了類 VS Code 的現代人工智慧輔助整合開發環境（AI-Assisted IDE）之工作流，透過一套 `tasks.json` 自動化建構與部署，提升開發效率。
+本文實作並記錄基於 BeagleBone Black 開發板 (核心為德州儀器 TI Sitara AM3358 處理器) 之嵌入式 Linux 系統建置流程。涵蓋自底層硬體與虛擬化開發主機環境之建構、交叉編譯工具鏈之配置、U-Boot、 Linux 核心（Kernel）與檔案系統（Root File System） BusyBox 原始碼之編譯，乃至最終開機引導程式與核心映像檔於安全數位卡（SD Card）之部署。 為了提升開發效率節省硬體資源，利用指令行工具 `vmrun` 進行虛擬機無介面（Headless）背景運行管理，並在 Windows 宿主端 (Host) 透過 SSH 連線至虛擬機（Guest）進行遠端開發。 此外，除了搭建傳統 Samba Server 配合 PuTTY 終端機的遠端模式，另外也整合了類 VS Code 的現代人工智慧輔助整合開發環境（AI-Assisted IDE）之工作流，透過一套 `tasks.json` 自動化建構與部署，提升開發效率。
 
 ---
 
@@ -17,6 +17,13 @@ lang: zh-Hant
 
 ### 1.1 硬體與序列埠除錯工具
 * **開發板**： **TI AM335x BeagleBone Black (BBB)** 。核心為 Sitara™ AM335x ARM® Cortex®-A8 處理器，配備 512MB DDR3 RAM、4GB 8 位元 eMMC 板載 flash 儲存，有 USB Host、Ethernet、HDMI 等介面。
+
+<!-- ![](/assets/26_0625/BBB_Board.jpg) -->
+
+<p align="center">
+<img src="{{ '/assets/26_0625/BBB_Board.png' | relative_url }}" width="600">
+</p>
+
 * **序列埠除錯工具**：為了接收系統啟動 Log，使用 USB 轉 UART 除錯模組（如 FT232, CP2102, CH340 等）。
   * 板子上的 **J1 Header**：原理圖可以到官方 Github 獲取，[beagleboard/beaglebone-black GitHub](https://github.com/beagleboard/beaglebone-black/tree/master)，第 1 腳位為 `GND`，第 4 腳位為 `RX`，第 5 腳位為 `TX`。
   * 參數配置：波特率（Baud Rate）設為 **115200 bps、資料位元 8-bit、無校驗位、停止位元 1-bit，無硬體流控制（8N1）**。
@@ -705,12 +712,17 @@ sudo chmod 644 ./etc/fstab
 sudo cp -rf ./* /media/brandon/rootfs/
 ```
 
-
 ---
 
 ## 10. 感想
 
 能看到 Linux 系統在開發板上啟動，可以透過命令列輸入熟悉的指令，並看到回應，是非常開心的，因為這個系統全部是自己一步一步編譯和部署的，原本眼中神秘的作業系統現在變得真實許多。
+
+<!-- ![](/assets/26_0625/Bootup_success.png) -->
+
+<p align="center">
+<img src="{{ '/assets/26_0625/Bootup_success.png' | relative_url }}" width="700">
+</p>
 
 
 ## 📚 Reference
