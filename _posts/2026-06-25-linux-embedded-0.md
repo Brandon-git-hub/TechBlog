@@ -15,7 +15,6 @@ lang: zh-Hant
 
 ## 1. 開發環境 (硬體、虛擬機、專案目錄)
 
-
 ### 1.1 硬體與序列埠除錯工具
 * **開發板**： **TI AM335x BeagleBone Black (BBB)** 。核心為 Sitara™ AM335x ARM® Cortex®-A8 處理器，配備 512MB DDR3 RAM、4GB 8 位元 eMMC 板載 flash 儲存，有 USB Host、Ethernet、HDMI 等介面。
 * **序列埠除錯工具**：為了接收系統啟動 Log，使用 USB 轉 UART 除錯模組（如 FT232, CP2102, CH340 等）。
